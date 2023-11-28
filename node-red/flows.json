@@ -1,0 +1,437 @@
+[
+    {
+        "id": "014e995ad852dcb4",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9481e5012895a42f",
+        "type": "comment",
+        "z": "014e995ad852dcb4",
+        "name": "LOGIN",
+        "info": "",
+        "x": 150,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "46f9250594fac42f",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "Trigger login form at start",
+        "func": "msg.payload = {\n    \"tab\": \"Login\",\n    \"tabs\": {\n        \"hide\": [\"Home\"]\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 180,
+        "wires": [
+            [
+                "cce828c9efeed72e"
+            ]
+        ]
+    },
+    {
+        "id": "cce828c9efeed72e",
+        "type": "ui_ui_control",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "events": "all",
+        "x": 600,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e2596963c741f83a",
+        "type": "ui_form",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "label": "",
+        "group": "781ac152bb694f16",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Username",
+                "value": "username",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Password",
+                "value": "password",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "username": "",
+            "password": ""
+        },
+        "payload": "",
+        "submit": "Login",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [
+                "faa1ea60fc26b43f"
+            ]
+        ]
+    },
+    {
+        "id": "faa1ea60fc26b43f",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "Authenticate",
+        "func": "if (msg.payload.username == \"admin\" && msg.payload.password == \"admin\")\n    msg.payload.isValid = 1;\nelse msg.payload.isValid = 0;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 380,
+        "wires": [
+            [
+                "4cdb7f22faf73835"
+            ]
+        ]
+    },
+    {
+        "id": "c797af01e6cfdd81",
+        "type": "inject",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4cdb7f22faf73835",
+        "type": "switch",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "property": "payload.isValid",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 490,
+        "y": 380,
+        "wires": [
+            [
+                "ffaacdc65d7538df",
+                "65225bb8eb80e968"
+            ],
+            [
+                "588f6261007190fd"
+            ]
+        ]
+    },
+    {
+        "id": "ffaacdc65d7538df",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "Show tabs and disable Login",
+        "func": "msg.payload = {\n    \"tab\": \"Home\",\n    \"tabs\": {\n        \"hide\": [\"Login\"],\n        \"show\": [\"Home\"],\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 300,
+        "wires": [
+            [
+                "b0d7bb266b426f65"
+            ]
+        ]
+    },
+    {
+        "id": "64b3ecda923cc203",
+        "type": "ui_toast",
+        "z": "014e995ad852dcb4",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Authentication failed",
+        "name": "",
+        "x": 950,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "b0d7bb266b426f65",
+        "type": "ui_ui_control",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "events": "all",
+        "x": 980,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "404940e13e58778f",
+        "type": "ui_toast",
+        "z": "014e995ad852dcb4",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "Cancel",
+        "raw": false,
+        "className": "",
+        "topic": "Login successfully",
+        "name": "",
+        "x": 910,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "65225bb8eb80e968",
+        "type": "change",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Welcome back!!!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 400,
+        "wires": [
+            [
+                "404940e13e58778f"
+            ]
+        ]
+    },
+    {
+        "id": "588f6261007190fd",
+        "type": "change",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Invalid username or password!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 500,
+        "wires": [
+            [
+                "64b3ecda923cc203"
+            ]
+        ]
+    },
+    {
+        "id": "ca554bd83877478d",
+        "type": "comment",
+        "z": "014e995ad852dcb4",
+        "name": "HOME",
+        "info": "",
+        "x": 110,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "eabad2a3040034fe",
+        "type": "ui_gauge",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "59ed651b2ccf91aa",
+        "order": 1,
+        "width": "6",
+        "height": "7",
+        "gtype": "wave",
+        "title": "Food Remaining",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 600,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "850199024ac98b89",
+        "type": "change",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "80",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 680,
+        "wires": [
+            [
+                "eabad2a3040034fe"
+            ]
+        ]
+    },
+    {
+        "id": "04a41ae4d61f762d",
+        "type": "inject",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 700,
+        "wires": [
+            [
+                "850199024ac98b89"
+            ]
+        ]
+    },
+    {
+        "id": "781ac152bb694f16",
+        "type": "ui_group",
+        "name": "Login form",
+        "tab": "ce5ab49963467673",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "59ed651b2ccf91aa",
+        "type": "ui_group",
+        "name": "Food capacity",
+        "tab": "fa03995da56e803e",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ce5ab49963467673",
+        "type": "ui_tab",
+        "d": true,
+        "name": "Login",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "fa03995da56e803e",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
