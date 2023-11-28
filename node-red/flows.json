@@ -138,7 +138,9 @@
         "x": 140,
         "y": 180,
         "wires": [
-            []
+            [
+                "46f9250594fac42f"
+            ]
         ]
     },
     {
@@ -420,7 +422,6 @@
     {
         "id": "ce5ab49963467673",
         "type": "ui_tab",
-        "d": true,
         "name": "Login",
         "icon": "dashboard",
         "disabled": false,
