@@ -1,3 +1,20 @@
+#include "PubSubClient.h"
+#include "WiFi.h"
+#include <ESP32Servo.h>
+#include <LiquidCrystal_I2C.h>
+#include "DHTesp.h"
+
+const char* ssid = "Wokwi-GUEST";
+const char* password = "";
+const char* mqttServer = "broker.hivemq.com"; 
+int port = 1883;
+
+WiFiClient wifiClient;
+PubSubClient mqttClient(wifiClient);
+LiquidCrystal_I2C lcd(0x27,16,2);
+DHTesp dhtSensor;
+
+
 // Define pins for LED
 #define LED_PIN 2
 
@@ -29,14 +46,83 @@
 #define LCD_SDA_PIN 19
 
 
+// Wifi and MQTT setup
+void wifiConnect() {
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    lcd.print(".");
+  }
+  lcd.println(" Connected!");
+}
+
+void mqttConnect() {
+  while(!mqttClient.connected()) {
+    lcd.println("Attemping MQTT connection...");
+    String clientId = "ESP32Client-";
+    clientId += String(random(0xffff), HEX);
+    if(mqttClient.connect(clientId.c_str())) {
+      lcd.println("connected");
+
+      //***Subscribe all topic you need***
+     
+    }
+    else {
+      lcd.println("try again in 5 seconds");
+      delay(5000);
+    }
+  }
+}
+
+
+//MQTT Receiver
+void callback(char* topic, byte* message, unsigned int length) {
+  Serial.println(topic);
+  String strMsg;
+  for(int i=0; i<length; i++) {
+    strMsg += (char)message[i];
+  }
+  Serial.println(strMsg);
+
+  //***Code here to process the received package***
+
+}
+
+
+String getTemp() {
+  TempAndHumidity data = dhtSensor.getTempAndHumidity();
+  return String(data.temperature, 2);
+}
+
+String getHumid() {
+  TempAndHumidity data = dhtSensor.getTempAndHumidity();
+  return String(data.humidity, 2);
+}
+
 
 void setup() {
+  // LED
   pinMode(2, OUTPUT);
+
+  // DHT
+  pinMode(DHT22_PIN, DHTesp::DHT22);
+
+  // LCD
+  lcd.init();
+  lcd.backlight();
+
+  // Wifi and MQTT
+  wifiConnect();
+  mqttClient.setServer(mqttServer, port);
+  mqttClient.setCallback(callback);
+  mqttClient.setKeepAlive( 90 );
+
 }
 
 void loop() {
   delay(1000);
-  digitalWrite(2, HIGH);
+  lcd.clear();
+  lcd.print("Hello");
   delay(1000); 
-  digitalWrite(2, LOW);
+  lcd.print("World!");
 }
