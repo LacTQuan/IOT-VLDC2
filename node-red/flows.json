@@ -320,8 +320,8 @@
         "name": "",
         "group": "59ed651b2ccf91aa",
         "order": 1,
-        "width": "6",
-        "height": "7",
+        "width": 9,
+        "height": 6,
         "gtype": "wave",
         "title": "Food Remaining",
         "label": "%",
@@ -389,12 +389,1040 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 150,
+        "x": 130,
         "y": 700,
         "wires": [
             [
-                "850199024ac98b89"
+                "850199024ac98b89",
+                "65c72563e6e340f2",
+                "1fb81c773113a658"
             ]
+        ]
+    },
+    {
+        "id": "6efac2475bd81f8a",
+        "type": "ui_gauge",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "457669cf121f2326",
+        "order": 2,
+        "width": 5,
+        "height": 6,
+        "gtype": "donut",
+        "title": "Humidity",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 600,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "33e12367c5ed10f3",
+        "type": "ui_gauge",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "457669cf121f2326",
+        "order": 1,
+        "width": 5,
+        "height": 6,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "℃",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 590,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "061e7e77da697355",
+        "type": "ui_slider",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "label": "Light slider",
+        "tooltip": "",
+        "group": "747116a3a4eddf25",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "className": "",
+        "x": 210,
+        "y": 920,
+        "wires": [
+            [
+                "fbdf6faf86e3009e"
+            ]
+        ]
+    },
+    {
+        "id": "fbdf6faf86e3009e",
+        "type": "ui_gauge",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "747116a3a4eddf25",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "compass",
+        "title": "Light",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 410,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "65c72563e6e340f2",
+        "type": "change",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "70",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 740,
+        "wires": [
+            [
+                "6efac2475bd81f8a"
+            ]
+        ]
+    },
+    {
+        "id": "1fb81c773113a658",
+        "type": "change",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "10",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 820,
+        "wires": [
+            [
+                "33e12367c5ed10f3"
+            ]
+        ]
+    },
+    {
+        "id": "3fc302c92802f352",
+        "type": "ui_chart",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "3e75d3f7611fd738",
+        "order": 1,
+        "width": 10,
+        "height": 5,
+        "label": "Food consumed",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": true,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": true,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 540,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "41a6782308e050f4",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "function 1",
+        "func": "msg.payload = Math.random() * 100;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 980,
+        "wires": [
+            [
+                "3fc302c92802f352"
+            ]
+        ]
+    },
+    {
+        "id": "aec8f91f786bba49",
+        "type": "inject",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 980,
+        "wires": [
+            [
+                "41a6782308e050f4"
+            ]
+        ]
+    },
+    {
+        "id": "b0052369fed55ec5",
+        "type": "ui_toast",
+        "z": "014e995ad852dcb4",
+        "position": "prompt",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": false,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "Cancel",
+        "raw": false,
+        "className": "",
+        "topic": "Enter the PIN code",
+        "name": "",
+        "x": 470,
+        "y": 1120,
+        "wires": [
+            [
+                "84bcd23cd8a66370"
+            ]
+        ]
+    },
+    {
+        "id": "716858e4dcc0bd1c",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "Ask for PIN code",
+        "func": "msg.payload = \"You are about to open / close the lid\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 1080,
+        "wires": [
+            [
+                "b0052369fed55ec5"
+            ]
+        ]
+    },
+    {
+        "id": "84bcd23cd8a66370",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "function 3",
+        "func": "if (msg.payload == \"123\") {\n    msg.payload = true;\n}\nelse msg.payload = false;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 1080,
+        "wires": [
+            [
+                "561980af5f1dc528"
+            ]
+        ]
+    },
+    {
+        "id": "3646501b1c843e08",
+        "type": "ui_button",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "1b65de7fc91702ee",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Open / Close the lid",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "lid",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 90,
+        "y": 1120,
+        "wires": [
+            [
+                "716858e4dcc0bd1c"
+            ]
+        ]
+    },
+    {
+        "id": "561980af5f1dc528",
+        "type": "switch",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 750,
+        "y": 1140,
+        "wires": [
+            [
+                "86ad0e97281fce5f"
+            ],
+            [
+                "18bb8ab2774be7a0"
+            ]
+        ]
+    },
+    {
+        "id": "86ad0e97281fce5f",
+        "type": "ui_toast",
+        "z": "014e995ad852dcb4",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Operation successfully completed",
+        "name": "",
+        "x": 970,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "18bb8ab2774be7a0",
+        "type": "ui_toast",
+        "z": "014e995ad852dcb4",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Invalid PIN code",
+        "name": "",
+        "x": 970,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "3ed5f0b11793ea27",
+        "type": "comment",
+        "z": "014e995ad852dcb4",
+        "name": "FOOD SCHEDULE",
+        "info": "",
+        "x": 170,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "5af415f3487dcae3",
+        "type": "ui_date_picker",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "label": "date",
+        "group": "0d1a2c0b7eda5eb1",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 330,
+        "y": 1420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c68e683b60930949",
+        "type": "ui_text",
+        "z": "014e995ad852dcb4",
+        "group": "781ac152bb694f16",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 130,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "a73e6b6a915f0eb2",
+        "type": "ui_dropdown",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "0d1a2c0b7eda5eb1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 360,
+        "y": 1360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "798e723863e06953",
+        "type": "comment",
+        "z": "014e995ad852dcb4",
+        "name": "PET PROFILE",
+        "info": "",
+        "x": 140,
+        "y": 2500,
+        "wires": []
+    },
+    {
+        "id": "c839f2d795c99a5f",
+        "type": "ui_text",
+        "z": "014e995ad852dcb4",
+        "group": "c67eb2ed437d0cbf",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Name:",
+        "format": "{{msg.payload.name}}",
+        "layout": "row-center",
+        "className": "",
+        "style": true,
+        "font": "Arial,Arial,Helvetica,sans-serif",
+        "fontSize": "20",
+        "color": "#ffffff",
+        "x": 490,
+        "y": 2460,
+        "wires": []
+    },
+    {
+        "id": "e3d8dfb06ab4998e",
+        "type": "ui_text",
+        "z": "014e995ad852dcb4",
+        "group": "c67eb2ed437d0cbf",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Date of birth:",
+        "format": "{{msg.payload.dob}}",
+        "layout": "row-center",
+        "className": "",
+        "style": true,
+        "font": "Arial,Arial,Helvetica,sans-serif",
+        "fontSize": "20",
+        "color": "#ffffff",
+        "x": 510,
+        "y": 2540,
+        "wires": []
+    },
+    {
+        "id": "ed73ebc030c3fcc9",
+        "type": "inject",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload.name",
+                "v": "Kiki",
+                "vt": "str"
+            },
+            {
+                "p": "payload.dob",
+                "v": "01 - 01 - 2022",
+                "vt": "str"
+            },
+            {
+                "p": "payload.weight",
+                "v": "8kg",
+                "vt": "str"
+            },
+            {
+                "p": "payload.breed",
+                "v": "Cho co",
+                "vt": "str"
+            },
+            {
+                "p": "payload.color",
+                "v": "Dark, green, pink, purple",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 90,
+        "y": 2560,
+        "wires": [
+            [
+                "c839f2d795c99a5f",
+                "e3d8dfb06ab4998e",
+                "3bcc2ad7d5083a0d",
+                "7490d24185328eb0",
+                "fd670fe1d185c7e1",
+                "5b0cbe8e8c2d30d0"
+            ]
+        ]
+    },
+    {
+        "id": "3bcc2ad7d5083a0d",
+        "type": "ui_text",
+        "z": "014e995ad852dcb4",
+        "group": "c67eb2ed437d0cbf",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Weight:",
+        "format": "{{msg.payload.weight}}",
+        "layout": "row-center",
+        "className": "",
+        "style": true,
+        "font": "Arial,Arial,Helvetica,sans-serif",
+        "fontSize": "20",
+        "color": "#ffffff",
+        "x": 460,
+        "y": 2620,
+        "wires": []
+    },
+    {
+        "id": "7490d24185328eb0",
+        "type": "ui_text",
+        "z": "014e995ad852dcb4",
+        "group": "c67eb2ed437d0cbf",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Breed:",
+        "format": "{{msg.payload.breed}}",
+        "layout": "row-center",
+        "className": "",
+        "style": true,
+        "font": "Arial,Arial,Helvetica,sans-serif",
+        "fontSize": "20",
+        "color": "#ffffff",
+        "x": 450,
+        "y": 2720,
+        "wires": []
+    },
+    {
+        "id": "fd670fe1d185c7e1",
+        "type": "ui_text",
+        "z": "014e995ad852dcb4",
+        "group": "c67eb2ed437d0cbf",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Color: ",
+        "format": "{{msg.payload.color}}",
+        "layout": "row-center",
+        "className": "",
+        "style": true,
+        "font": "Arial,Arial,Helvetica,sans-serif",
+        "fontSize": "20",
+        "color": "#ffffff",
+        "x": 430,
+        "y": 2780,
+        "wires": []
+    },
+    {
+        "id": "1621f3b45c868805",
+        "type": "ui_button",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "c67eb2ed437d0cbf",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Update information",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 150,
+        "y": 2900,
+        "wires": [
+            [
+                "8c474e2cfe1dfc19"
+            ]
+        ]
+    },
+    {
+        "id": "e18874663994130d",
+        "type": "ui_form",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "label": "Enter new information",
+        "group": "a4f453e6cef8b789",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Name",
+                "value": "name",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Date of birth",
+                "value": "dob",
+                "type": "date",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Weight",
+                "value": "weight",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Breed",
+                "value": "breed",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Color",
+                "value": "color",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "name": "",
+            "dob": "",
+            "weight": "",
+            "breed": "",
+            "color": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": true,
+        "className": "",
+        "x": 320,
+        "y": 3000,
+        "wires": [
+            [
+                "e4a3e4a80961a3c7"
+            ]
+        ]
+    },
+    {
+        "id": "8c474e2cfe1dfc19",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "Switch to update screen",
+        "func": "msg.payload = {\n    \"group\": {\n        \"show\": [\"Profile_Update\"]\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 2900,
+        "wires": [
+            [
+                "c25cc2b50fe1c1cb"
+            ]
+        ]
+    },
+    {
+        "id": "c25cc2b50fe1c1cb",
+        "type": "ui_ui_control",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "events": "all",
+        "x": 660,
+        "y": 2880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b0cbe8e8c2d30d0",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "Set update form invisible",
+        "func": "msg.payload = {\n    \"group\": {\n        \"hide\": [\"Profile_Update\"]\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 2820,
+        "wires": [
+            [
+                "2baa66bc5c56d927"
+            ]
+        ]
+    },
+    {
+        "id": "2baa66bc5c56d927",
+        "type": "ui_ui_control",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "events": "all",
+        "x": 420,
+        "y": 2840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e4a3e4a80961a3c7",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "Set update form invisible",
+        "func": "msg.payload = {\n    \"group\": {\n        \"hide\": [\"Profile_Update\"]\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 3020,
+        "wires": [
+            [
+                "afab28816443a586"
+            ]
+        ]
+    },
+    {
+        "id": "afab28816443a586",
+        "type": "ui_ui_control",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "events": "all",
+        "x": 860,
+        "y": 2960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e3353a170454404",
+        "type": "comment",
+        "z": "014e995ad852dcb4",
+        "name": "DEVICE MANAGER",
+        "info": "",
+        "x": 170,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "eeb9d7ec9cb30b91",
+        "type": "ui_text",
+        "z": "014e995ad852dcb4",
+        "group": "bc6151c1fb37c908",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Buzzer",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 360,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "5a7988bfbd594dfd",
+        "type": "comment",
+        "z": "014e995ad852dcb4",
+        "name": "SETTINGS",
+        "info": "",
+        "x": 120,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "21cfe213157d9efc",
+        "type": "inject",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload.email",
+                "v": "choGthinh@dbrr.com",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 1920,
+        "wires": [
+            [
+                "7f9804ed79db1690"
+            ]
+        ]
+    },
+    {
+        "id": "7f9804ed79db1690",
+        "type": "ui_text",
+        "z": "014e995ad852dcb4",
+        "group": "ca32dfb2ec8ab7f1",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Email: ",
+        "format": "{{msg.payload.email}}",
+        "layout": "row-left",
+        "className": "",
+        "style": true,
+        "font": "",
+        "fontSize": "20",
+        "color": "#ffffff",
+        "x": 370,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "71115f084e4c0a44",
+        "type": "ui_button",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "ca32dfb2ec8ab7f1",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Change email",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 520,
+        "y": 1840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b46fd797457240c9",
+        "type": "ui_text",
+        "z": "014e995ad852dcb4",
+        "group": "ca32dfb2ec8ab7f1",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Notification",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "style": true,
+        "font": "Arial,Arial,Helvetica,sans-serif",
+        "fontSize": "20",
+        "color": "#ffffff",
+        "x": 330,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "c313c3e19bee46fe",
+        "type": "ui_switch",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "label": "On / Off",
+        "tooltip": "",
+        "group": "ca32dfb2ec8ab7f1",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 520,
+        "y": 1960,
+        "wires": [
+            []
         ]
     },
     {
@@ -415,15 +1443,116 @@
         "tab": "fa03995da56e803e",
         "order": 1,
         "disp": true,
+        "width": "9",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "457669cf121f2326",
+        "type": "ui_group",
+        "name": "Temperature",
+        "tab": "fa03995da56e803e",
+        "order": 2,
+        "disp": true,
+        "width": 10,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "747116a3a4eddf25",
+        "type": "ui_group",
+        "name": "Light",
+        "tab": "fa03995da56e803e",
+        "order": 3,
+        "disp": true,
         "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3e75d3f7611fd738",
+        "type": "ui_group",
+        "name": "Food consumption",
+        "tab": "fa03995da56e803e",
+        "order": 4,
+        "disp": true,
+        "width": 10,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1b65de7fc91702ee",
+        "type": "ui_group",
+        "name": "Container lid",
+        "tab": "fa03995da56e803e",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0d1a2c0b7eda5eb1",
+        "type": "ui_group",
+        "name": "Food schedule",
+        "tab": "7b0bd463e3250132",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c67eb2ed437d0cbf",
+        "type": "ui_group",
+        "name": "Profile",
+        "tab": "e6b7a06246b867a9",
+        "order": 1,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a4f453e6cef8b789",
+        "type": "ui_group",
+        "name": "Update",
+        "tab": "e6b7a06246b867a9",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "bc6151c1fb37c908",
+        "type": "ui_group",
+        "name": "Buzzer",
+        "tab": "8acf4cd8dcadb6ca",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ca32dfb2ec8ab7f1",
+        "type": "ui_group",
+        "name": "Email",
+        "tab": "b04556f58b734d6e",
+        "order": 1,
+        "disp": true,
+        "width": 9,
         "collapse": false,
         "className": ""
     },
     {
         "id": "ce5ab49963467673",
         "type": "ui_tab",
+        "d": true,
         "name": "Login",
         "icon": "dashboard",
+        "order": 1,
         "disabled": false,
         "hidden": false
     },
@@ -432,6 +1561,43 @@
         "type": "ui_tab",
         "name": "Home",
         "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "7b0bd463e3250132",
+        "type": "ui_tab",
+        "name": "Food schedule",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e6b7a06246b867a9",
+        "type": "ui_tab",
+        "name": "Profile",
+        "icon": "dashboard",
+        "order": 6,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "8acf4cd8dcadb6ca",
+        "type": "ui_tab",
+        "name": "Device",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b04556f58b734d6e",
+        "type": "ui_tab",
+        "name": "Settings",
+        "icon": "dashboard",
+        "order": 5,
         "disabled": false,
         "hidden": false
     }
