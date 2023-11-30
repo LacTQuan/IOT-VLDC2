@@ -6,3 +6,4 @@ LiquidCrystal I2C
 DHT sensor library for ESPx
 PubSubClient
 ESP32Servo
+HX711
