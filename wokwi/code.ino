@@ -16,6 +16,8 @@ LiquidCrystal_I2C lcd(0x27,16,2);
 DHTesp dhtSensor;
 Servo servo1, servo2;
 HX711 scale50, scale5;
+// Tong khoi luong thuc an ma binh chua duoc la 20kg
+double MAX_FOOD = 20000;
 
 
 // Define pins for LED
@@ -128,6 +130,31 @@ int getBrightness() {
   return analogRead(LDR_PIN);
 }
 
+// Load cell for food container
+String getFoodAmount() {
+  return String(100.0 * getWeight(false) / MAX_FOOD);
+}
+
+// Mo va dong nap hop dung do an
+void lockUnlockLid(bool lock) {
+  if (lock) servo1.write(0);
+  else servo1.write(90);
+}
+
+// In cac thong so ra man LCD, moi 5s cap nhat mot lan
+long start = 0;
+void updateLCD() {
+  if (!start || millis() - start > 5000) {
+    // Serial.println(getWeight(false));
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(getTemp() + "*C | " + getHumid() + "%");
+    lcd.setCursor(0, 1);
+    lcd.print("Food: " + getFoodAmount() + "%");
+    start = millis();
+  }
+}
+
 
 void setup() {
   Serial.begin(115200);
@@ -144,10 +171,10 @@ void setup() {
   lcd.setCursor(0, 0);
 
   // Wifi and MQTT
-  // wifiConnect();
-  // mqttClient.setServer(mqttServer, port);
-  // mqttClient.setCallback(callback);
-  // mqttClient.setKeepAlive( 90 );
+  wifiConnect();
+  mqttClient.setServer(mqttServer, port);
+  mqttClient.setCallback(callback);
+  mqttClient.setKeepAlive( 90 );
 
   lcd.clear();
   lcd.print("Hello");
@@ -158,8 +185,8 @@ void setup() {
   // Servo
   servo1.attach(SERVO1_PIN);
   servo2.attach(SERVO2_PIN);
-  servo1.write(80);
-  servo2.write(45);
+  servo1.write(0);
+  servo2.write(0);
 
   // Photoresister
   pinMode(LDR_PIN, INPUT);
@@ -175,9 +202,5 @@ void setup() {
 }
 
 void loop() {
-  Serial.println(getTemp() + " " + getHumid());
-  Serial.println(String(getWeight(true),2) + "g");
-  Serial.println(getDistance());
-  Serial.println(getBrightness());
-  delay(2000);
+  updateLCD();
 }
