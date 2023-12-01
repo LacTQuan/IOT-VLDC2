@@ -18,13 +18,15 @@ Servo servo1, servo2;
 HX711 scale50, scale5;
 // Tong khoi luong thuc an ma binh chua duoc la 20kg
 double MAX_FOOD = 20000;
+// Anh sang duoc dieu chinh tren website
+int curBrightness = 100;
 
 
 // Define pins for LED
 #define LED_PIN 2
 
 // Define pins for Servos
-#define SERVO1_PIN 26
+#define SERVO1_PIN 14
 #define SERVO2_PIN 27
 
 // Define pins for HX711 Load Cells
@@ -41,7 +43,7 @@ double MAX_FOOD = 20000;
 #define ULTRASONIC_ECHO_PIN 19
 
 // Define pins for Buzzer
-#define BUZZER_PIN 4
+#define BUZZER_PIN 5
 
 // Define pins for Photoresistor Sensor
 #define LDR_PIN 34
@@ -50,6 +52,14 @@ double MAX_FOOD = 20000;
 #define LCD_SCL_PIN 22
 #define LCD_SDA_PIN 21
 
+// Note for buzzer
+#define NOTE_C4 261.63
+#define NOTE_D4 293.66
+#define NOTE_E4 329.63
+#define NOTE_F4 349.23
+#define NOTE_G4 392.00
+#define NOTE_A4 440.00
+#define NOTE_B4 493.88
 
 // Wifi and MQTT setup
 void wifiConnect() {
@@ -78,7 +88,6 @@ void mqttConnect() {
     }
   }
 }
-
 
 //MQTT Receiver
 void callback(char* topic, byte* message, unsigned int length) {
@@ -117,7 +126,6 @@ long getDistance() {
 
   return distanceCm;
 }
-
 
 // Load
 double getWeight(bool is5) {
@@ -160,7 +168,10 @@ void setup() {
   Serial.begin(115200);
 
   // LED
-  pinMode(2, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
+
+  // BUZZER
+  pinMode(BUZZER_PIN, OUTPUT);
 
   // DHT
   dhtSensor.setup(DHT22_PIN, DHTesp::DHT22);
@@ -196,11 +207,58 @@ void setup() {
   scale50.begin(CELL_50_DT_PIN, CELL_50_SCK_PIN);
   // Link: https://wokwi.com/projects/344192176616374868
 
-
+  
   // 
 
 }
 
 void loop() {
   updateLCD();
+  int distance = getDistance(); // cm
+  if(distance <= 5){
+    if(getBrightness() > 2531) // 2531 is stairway lighting 
+      analogWrite(LED_PIN, curBrightness);
+    else{
+      analogWrite(LED_PIN, 0);
+    }
+    playMelody();
+    int weight_5 = getWeight(true);
+    if(weight_5 < 10){
+      servo2.write(90);
+      do{
+        weight_5 = getWeight(true);
+      } while(weight_5 < 30);
+      servo2.write(0);
+    }
+  }
+  else{
+    analogWrite(LED_PIN, 0);
+    servo2.write(0);
+  }
+}
+
+void playMelody() {
+  // Define the melody notes and durations
+  // int melody[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_B4};
+  int melody[] = {NOTE_C4, NOTE_E4, NOTE_G4, NOTE_B4};
+
+  // Iterate through the melody
+  for (int i = 0; i < 4; i++) {
+    int noteFrequency = melody[i];
+
+    // Calculate the number of cycles for the PWM signal
+    int cycles = 500;
+
+    // Play the note manually with PWM
+    for (int j = 0; j < cycles; j++) {
+      digitalWrite(BUZZER_PIN, HIGH);
+      delayMicroseconds(noteFrequency);
+      digitalWrite(BUZZER_PIN, LOW);
+      delayMicroseconds(noteFrequency);
+    }
+
+    delay(50);  // add a small delay between notes
+  }
+
+  digitalWrite(BUZZER_PIN, LOW);  // turn off the buzzer
 }
