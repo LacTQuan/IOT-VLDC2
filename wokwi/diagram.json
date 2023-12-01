@@ -10,7 +10,7 @@
       "id": "led1",
       "top": 265.2,
       "left": 100.2,
-      "attrs": { "color": "orange", "flip": "1" }
+      "attrs": { "color": "green", "flip": "1" }
     },
     {
       "type": "wokwi-servo",
@@ -52,7 +52,7 @@
       "id": "ultrasonic1",
       "top": 241.5,
       "left": 283.9,
-      "attrs": { "distance": "150" }
+      "attrs": { "distance": "2" }
     },
     {
       "type": "wokwi-buzzer",
@@ -81,6 +81,13 @@
       "top": 25.6,
       "left": 264.8,
       "attrs": { "pins": "i2c" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 253.55,
+      "left": 134.4,
+      "attrs": { "value": "100" }
     }
   ],
   "connections": [
@@ -99,7 +106,6 @@
     [ "servo:PWM", "esp:26", "green", [ "h-307.2", "v-268.6" ] ],
     [ "servo1:GND", "bb1:bn.4", "black", [ "h0" ] ],
     [ "servo1:V+", "bb1:bp.2", "red", [ "h-28.8", "v0.1" ] ],
-    [ "servo1:PWM", "esp:26", "cyan", [ "h-307.2", "v-268.6" ] ],
     [ "servo2:PWM", "esp:27", "orange", [ "h-316.8", "v-412.6" ] ],
     [ "ldr1:GND", "bb1:bn.40", "black", [ "h0" ] ],
     [ "ldr1:VCC", "bb1:bp.39", "red", [ "h0" ] ],
@@ -118,7 +124,6 @@
     [ "cell1:SCK", "esp:33", "yellow", [ "h-28.8", "v-144.8", "h-796.8", "v182.4" ] ],
     [ "cell2:GND", "bb1:bn.49", "black", [ "h0" ] ],
     [ "cell2:VCC", "bb1:bp.48", "red", [ "h0" ] ],
-    [ "esp:4", "bb1:16t.c", "blue", [ "h105.6", "v57.6" ] ],
     [ "cell2:DT", "esp:17", "white", [ "h-38.4", "v220.3", "h-585.6", "v-19.2" ] ],
     [ "cell2:SCK", "esp:16", "limegreen", [ "h-48", "v220", "h-585.6", "v-499.2" ] ],
     [ "lcd2:SDA", "esp:21", "green", [ "h-38.4", "v0.2" ] ],
@@ -130,10 +135,14 @@
     [ "ultrasonic1:TRIG", "bb1:34b.i", "", [ "$bb" ] ],
     [ "ultrasonic1:ECHO", "bb1:35b.i", "", [ "$bb" ] ],
     [ "ultrasonic1:GND", "bb1:36b.i", "", [ "$bb" ] ],
+    [ "r1:1", "bb1:2b.g", "", [ "$bb" ] ],
+    [ "r1:2", "bb1:8b.g", "", [ "$bb" ] ],
+    [ "esp:14", "servo1:PWM", "cyan", [ "h-28.65", "v201.6" ] ],
     [ "bz1:1", "bb1:15t.a", "", [ "$bb" ] ],
     [ "bz1:2", "bb1:16t.a", "", [ "$bb" ] ],
-    [ "r1:1", "bb1:2b.g", "", [ "$bb" ] ],
-    [ "r1:2", "bb1:8b.g", "", [ "$bb" ] ]
+    [ "r2:1", "bb1:10t.c", "", [ "$bb" ] ],
+    [ "r2:2", "bb1:16t.c", "", [ "$bb" ] ],
+    [ "bb1:10t.b", "esp:5", "blue", [ "v0", "h-115.2", "v-86.4" ] ]
   ],
   "dependencies": {}
 }
