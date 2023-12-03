@@ -309,8 +309,8 @@
         "z": "014e995ad852dcb4",
         "name": "HOME",
         "info": "",
-        "x": 110,
-        "y": 620,
+        "x": 70,
+        "y": 640,
         "wires": []
     },
     {
@@ -453,61 +453,6 @@
         "className": "",
         "x": 590,
         "y": 820,
-        "wires": []
-    },
-    {
-        "id": "061e7e77da697355",
-        "type": "ui_slider",
-        "z": "014e995ad852dcb4",
-        "name": "",
-        "label": "Light slider",
-        "tooltip": "",
-        "group": "747116a3a4eddf25",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "outs": "all",
-        "topic": "topic",
-        "topicType": "msg",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "className": "",
-        "x": 210,
-        "y": 920,
-        "wires": [
-            [
-                "fbdf6faf86e3009e"
-            ]
-        ]
-    },
-    {
-        "id": "fbdf6faf86e3009e",
-        "type": "ui_gauge",
-        "z": "014e995ad852dcb4",
-        "name": "",
-        "group": "747116a3a4eddf25",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "compass",
-        "title": "Light",
-        "label": "units",
-        "format": "{{value}}",
-        "min": 0,
-        "max": 10,
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
-        "className": "",
-        "x": 410,
-        "y": 920,
         "wires": []
     },
     {
@@ -658,171 +603,13 @@
         ]
     },
     {
-        "id": "b0052369fed55ec5",
-        "type": "ui_toast",
-        "z": "014e995ad852dcb4",
-        "position": "prompt",
-        "displayTime": "3",
-        "highlight": "",
-        "sendall": false,
-        "outputs": 1,
-        "ok": "OK",
-        "cancel": "Cancel",
-        "raw": false,
-        "className": "",
-        "topic": "Enter the PIN code",
-        "name": "",
-        "x": 470,
-        "y": 1120,
-        "wires": [
-            [
-                "84bcd23cd8a66370"
-            ]
-        ]
-    },
-    {
-        "id": "716858e4dcc0bd1c",
-        "type": "function",
-        "z": "014e995ad852dcb4",
-        "name": "Ask for PIN code",
-        "func": "msg.payload = \"You are about to open / close the lid\";\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 290,
-        "y": 1080,
-        "wires": [
-            [
-                "b0052369fed55ec5"
-            ]
-        ]
-    },
-    {
-        "id": "84bcd23cd8a66370",
-        "type": "function",
-        "z": "014e995ad852dcb4",
-        "name": "function 3",
-        "func": "if (msg.payload == \"123\") {\n    msg.payload = true;\n}\nelse msg.payload = false;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 620,
-        "y": 1080,
-        "wires": [
-            [
-                "561980af5f1dc528"
-            ]
-        ]
-    },
-    {
-        "id": "3646501b1c843e08",
-        "type": "ui_button",
-        "z": "014e995ad852dcb4",
-        "name": "",
-        "group": "1b65de7fc91702ee",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "label": "Open / Close the lid",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "className": "",
-        "icon": "",
-        "payload": "lid",
-        "payloadType": "str",
-        "topic": "topic",
-        "topicType": "msg",
-        "x": 90,
-        "y": 1120,
-        "wires": [
-            [
-                "716858e4dcc0bd1c"
-            ]
-        ]
-    },
-    {
-        "id": "561980af5f1dc528",
-        "type": "switch",
-        "z": "014e995ad852dcb4",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            },
-            {
-                "t": "false"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 750,
-        "y": 1140,
-        "wires": [
-            [
-                "86ad0e97281fce5f"
-            ],
-            [
-                "18bb8ab2774be7a0"
-            ]
-        ]
-    },
-    {
-        "id": "86ad0e97281fce5f",
-        "type": "ui_toast",
-        "z": "014e995ad852dcb4",
-        "position": "top right",
-        "displayTime": "3",
-        "highlight": "",
-        "sendall": true,
-        "outputs": 0,
-        "ok": "OK",
-        "cancel": "",
-        "raw": false,
-        "className": "",
-        "topic": "Operation successfully completed",
-        "name": "",
-        "x": 970,
-        "y": 1060,
-        "wires": []
-    },
-    {
-        "id": "18bb8ab2774be7a0",
-        "type": "ui_toast",
-        "z": "014e995ad852dcb4",
-        "position": "top right",
-        "displayTime": "3",
-        "highlight": "",
-        "sendall": true,
-        "outputs": 0,
-        "ok": "OK",
-        "cancel": "",
-        "raw": false,
-        "className": "",
-        "topic": "Invalid PIN code",
-        "name": "",
-        "x": 970,
-        "y": 1180,
-        "wires": []
-    },
-    {
         "id": "3ed5f0b11793ea27",
         "type": "comment",
         "z": "014e995ad852dcb4",
         "name": "FOOD SCHEDULE",
         "info": "",
-        "x": 170,
-        "y": 1360,
+        "x": 130,
+        "y": 1300,
         "wires": []
     },
     {
@@ -1261,29 +1048,8 @@
         "z": "014e995ad852dcb4",
         "name": "DEVICE MANAGER",
         "info": "",
-        "x": 170,
-        "y": 1520,
-        "wires": []
-    },
-    {
-        "id": "eeb9d7ec9cb30b91",
-        "type": "ui_text",
-        "z": "014e995ad852dcb4",
-        "group": "bc6151c1fb37c908",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "Buzzer",
-        "format": "{{msg.payload}}",
-        "layout": "row-spread",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 360,
-        "y": 1520,
+        "x": 150,
+        "y": 1600,
         "wires": []
     },
     {
@@ -1292,8 +1058,8 @@
         "z": "014e995ad852dcb4",
         "name": "SETTINGS",
         "info": "",
-        "x": 120,
-        "y": 1840,
+        "x": 100,
+        "y": 2300,
         "wires": []
     },
     {
@@ -1317,8 +1083,8 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 170,
-        "y": 1920,
+        "x": 150,
+        "y": 2380,
         "wires": [
             [
                 "7f9804ed79db1690"
@@ -1342,8 +1108,8 @@
         "font": "",
         "fontSize": "20",
         "color": "#ffffff",
-        "x": 370,
-        "y": 1840,
+        "x": 350,
+        "y": 2300,
         "wires": []
     },
     {
@@ -1366,8 +1132,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 520,
-        "y": 1840,
+        "x": 500,
+        "y": 2300,
         "wires": [
             []
         ]
@@ -1389,8 +1155,8 @@
         "font": "Arial,Arial,Helvetica,sans-serif",
         "fontSize": "20",
         "color": "#ffffff",
-        "x": 330,
-        "y": 1960,
+        "x": 310,
+        "y": 2420,
         "wires": []
     },
     {
@@ -1419,11 +1185,492 @@
         "offcolor": "",
         "animate": false,
         "className": "",
-        "x": 520,
-        "y": 1960,
+        "x": 500,
+        "y": 2420,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "101f23cc8165e13d",
+        "type": "mqtt out",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "topic": "buzzer/mute",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f17cdd78e88bd397",
+        "x": 590,
+        "y": 1620,
+        "wires": []
+    },
+    {
+        "id": "c6f56b90eb725a29",
+        "type": "mqtt out",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "topic": "buzzer/trigger",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f17cdd78e88bd397",
+        "x": 580,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "47be2075844ea9c7",
+        "type": "ui_button",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "bc6151c1fb37c908",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Trigger the buzzer",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "trigger buzzer",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 350,
+        "y": 1700,
+        "wires": [
+            [
+                "c6f56b90eb725a29"
+            ]
+        ]
+    },
+    {
+        "id": "d2831241245445d3",
+        "type": "ui_switch",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "label": "Mute sound",
+        "tooltip": "",
+        "group": "bc6151c1fb37c908",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "buzzer off",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "buzzer on",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 350,
+        "y": 1620,
+        "wires": [
+            [
+                "101f23cc8165e13d"
+            ]
+        ]
+    },
+    {
+        "id": "061e7e77da697355",
+        "type": "ui_slider",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "label": "Light slider",
+        "tooltip": "",
+        "group": "c9502905ba51acc1",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": "0",
+        "max": 10,
+        "step": 1,
+        "className": "",
+        "x": 310,
+        "y": 1820,
+        "wires": [
+            [
+                "fbdf6faf86e3009e",
+                "184da9462cc97626"
+            ]
+        ]
+    },
+    {
+        "id": "fbdf6faf86e3009e",
+        "type": "ui_gauge",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "c9502905ba51acc1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "compass",
+        "title": "Light",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 530,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "007176a793d9dba6",
+        "type": "debug",
+        "z": "014e995ad852dcb4",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
+        "y": 1940,
+        "wires": []
+    },
+    {
+        "id": "ab3d42521bac7409",
+        "type": "mqtt in",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "topic": "light/cur",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "f17cdd78e88bd397",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 1860,
+        "wires": [
+            [
+                "061e7e77da697355",
+                "007176a793d9dba6"
+            ]
+        ]
+    },
+    {
+        "id": "dbf237059a94dec3",
+        "type": "mqtt out",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "topic": "get/all_data",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f17cdd78e88bd397",
+        "x": 370,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "d59f2e17f26a1f82",
+        "type": "inject",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 580,
+        "wires": [
+            [
+                "dbf237059a94dec3"
+            ]
+        ]
+    },
+    {
+        "id": "184da9462cc97626",
+        "type": "mqtt out",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "topic": "light/set",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f17cdd78e88bd397",
+        "x": 540,
+        "y": 1880,
+        "wires": []
+    },
+    {
+        "id": "b0052369fed55ec5",
+        "type": "ui_toast",
+        "z": "014e995ad852dcb4",
+        "position": "prompt",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": false,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "Cancel",
+        "raw": false,
+        "className": "",
+        "topic": "Enter the PIN code",
+        "name": "",
+        "x": 460,
+        "y": 2080,
+        "wires": [
+            [
+                "84bcd23cd8a66370"
+            ]
+        ]
+    },
+    {
+        "id": "716858e4dcc0bd1c",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "Ask for PIN code",
+        "func": "msg.payload = \"You are about to open / close the lid\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 2040,
+        "wires": [
+            [
+                "b0052369fed55ec5"
+            ]
+        ]
+    },
+    {
+        "id": "84bcd23cd8a66370",
+        "type": "function",
+        "z": "014e995ad852dcb4",
+        "name": "function 3",
+        "func": "if (msg.payload == \"123\") {\n    msg.payload = true;\n}\nelse msg.payload = false;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 2040,
+        "wires": [
+            [
+                "561980af5f1dc528"
+            ]
+        ]
+    },
+    {
+        "id": "3646501b1c843e08",
+        "type": "ui_button",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "32e211cfb4256c99",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Open / Close the lid",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "lid",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 2080,
+        "wires": [
+            [
+                "716858e4dcc0bd1c"
+            ]
+        ]
+    },
+    {
+        "id": "561980af5f1dc528",
+        "type": "switch",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 720,
+        "y": 2100,
+        "wires": [
+            [
+                "86ad0e97281fce5f",
+                "51f8d91b6dd2f796"
+            ],
+            [
+                "18bb8ab2774be7a0"
+            ]
+        ]
+    },
+    {
+        "id": "86ad0e97281fce5f",
+        "type": "ui_toast",
+        "z": "014e995ad852dcb4",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Operation successfully completed",
+        "name": "",
+        "x": 980,
+        "y": 2020,
+        "wires": []
+    },
+    {
+        "id": "18bb8ab2774be7a0",
+        "type": "ui_toast",
+        "z": "014e995ad852dcb4",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Invalid PIN code",
+        "name": "",
+        "x": 980,
+        "y": 2140,
+        "wires": []
+    },
+    {
+        "id": "9adbedeed82d67d6",
+        "type": "ui_button",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "group": "36278c24884c9f14",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Feed your pet",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 220,
+        "y": 2180,
+        "wires": [
+            [
+                "a23de2ae2c26947d"
+            ]
+        ]
+    },
+    {
+        "id": "51f8d91b6dd2f796",
+        "type": "mqtt out",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "topic": "lid/open",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f17cdd78e88bd397",
+        "x": 980,
+        "y": 2080,
+        "wires": []
+    },
+    {
+        "id": "a23de2ae2c26947d",
+        "type": "mqtt out",
+        "z": "014e995ad852dcb4",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f17cdd78e88bd397",
+        "x": 430,
+        "y": 2180,
+        "wires": []
     },
     {
         "id": "781ac152bb694f16",
@@ -1459,17 +1706,6 @@
         "className": ""
     },
     {
-        "id": "747116a3a4eddf25",
-        "type": "ui_group",
-        "name": "Light",
-        "tab": "fa03995da56e803e",
-        "order": 3,
-        "disp": true,
-        "width": "6",
-        "collapse": false,
-        "className": ""
-    },
-    {
         "id": "3e75d3f7611fd738",
         "type": "ui_group",
         "name": "Food consumption",
@@ -1477,17 +1713,6 @@
         "order": 4,
         "disp": true,
         "width": 10,
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "1b65de7fc91702ee",
-        "type": "ui_group",
-        "name": "Container lid",
-        "tab": "fa03995da56e803e",
-        "order": 5,
-        "disp": true,
-        "width": "6",
         "collapse": false,
         "className": ""
     },
@@ -1525,6 +1750,48 @@
         "className": ""
     },
     {
+        "id": "ca32dfb2ec8ab7f1",
+        "type": "ui_group",
+        "name": "Email",
+        "tab": "b04556f58b734d6e",
+        "order": 1,
+        "disp": true,
+        "width": 9,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f17cdd78e88bd397",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
         "id": "bc6151c1fb37c908",
         "type": "ui_group",
         "name": "Buzzer",
@@ -1536,13 +1803,35 @@
         "className": ""
     },
     {
-        "id": "ca32dfb2ec8ab7f1",
+        "id": "c9502905ba51acc1",
         "type": "ui_group",
-        "name": "Email",
-        "tab": "b04556f58b734d6e",
-        "order": 1,
+        "name": "Light",
+        "tab": "8acf4cd8dcadb6ca",
+        "order": 2,
         "disp": true,
-        "width": 9,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "32e211cfb4256c99",
+        "type": "ui_group",
+        "name": "Lid",
+        "tab": "8acf4cd8dcadb6ca",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "36278c24884c9f14",
+        "type": "ui_group",
+        "name": "Feed",
+        "tab": "8acf4cd8dcadb6ca",
+        "order": 4,
+        "disp": true,
+        "width": "6",
         "collapse": false,
         "className": ""
     },
@@ -1584,20 +1873,20 @@
         "hidden": false
     },
     {
-        "id": "8acf4cd8dcadb6ca",
-        "type": "ui_tab",
-        "name": "Device",
-        "icon": "dashboard",
-        "order": 4,
-        "disabled": false,
-        "hidden": false
-    },
-    {
         "id": "b04556f58b734d6e",
         "type": "ui_tab",
         "name": "Settings",
         "icon": "dashboard",
         "order": 5,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "8acf4cd8dcadb6ca",
+        "type": "ui_tab",
+        "name": "Device",
+        "icon": "dashboard",
+        "order": 4,
         "disabled": false,
         "hidden": false
     }
