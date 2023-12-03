@@ -4,22 +4,29 @@
 #include <LiquidCrystal_I2C.h>
 #include "DHTesp.h"
 #include "HX711.h"
+#include <string>
 
 const char* ssid = "Wokwi-GUEST";
 const char* password = "";
-const char* mqttServer = "broker.hivemq.com"; 
+const char* mqttServer = "broker.hivemq.com";
 int port = 1883;
 
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
-LiquidCrystal_I2C lcd(0x27,16,2);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 DHTesp dhtSensor;
 Servo servo1, servo2;
 HX711 scale50, scale5;
 // Tong khoi luong thuc an ma binh chua duoc la 20kg
 double MAX_FOOD = 20000;
 // Anh sang duoc dieu chinh tren website
-int curBrightness = 100;
+int curBrightness = 120;
+// tat loa
+bool isMuted = false;
+// nap dung do an
+bool isLocked = true;
+// cho an thu cong
+bool isFed = false;
 
 
 // Define pins for LED
@@ -72,15 +79,20 @@ void wifiConnect() {
 }
 
 void mqttConnect() {
-  while(!mqttClient.connected()) {
+  while (!mqttClient.connected()) {
     lcd.println("Attemping MQTT connection...");
     String clientId = "ESP32Client-";
     clientId += String(random(0xffff), HEX);
-    if(mqttClient.connect(clientId.c_str())) {
+    if (mqttClient.connect(clientId.c_str())) {
       lcd.println("connected");
 
       //***Subscribe all topic you need***
-     
+      mqttClient.subscribe("buzzer/mute");
+      mqttClient.subscribe("buzzer/trigger");
+      mqttClient.subscribe("get/all_data");
+      mqttClient.subscribe("light/set");
+      mqttClient.subscribe("lid/open");
+      mqttClient.subscribe("feed");
     }
     else {
       lcd.println("try again in 5 seconds");
@@ -93,10 +105,34 @@ void mqttConnect() {
 void callback(char* topic, byte* message, unsigned int length) {
   Serial.println(topic);
   String strMsg;
-  for(int i=0; i<length; i++) {
+  for (int i = 0; i < length; i++) {
     strMsg += (char)message[i];
   }
   Serial.println(strMsg);
+  String strTopic = String(topic);
+  if (strTopic == "buzzer/trigger") {
+    playMelody();
+  } 
+  else if (strTopic == "buzzer/mute") {
+    if (strMsg == "buzzer on") {
+      isMuted = false;
+    } else if (strMsg == "buzzer off") {
+      isMuted = true;
+    }
+  }
+  else if (strTopic == "light/set")  {
+    setBrightness(strMsg.toInt());
+  }
+  else if (strTopic == "lid/open") {
+    openLid();
+  }
+  else if (strTopic == "feed") {
+    isFed = true;
+  }
+  else if (strTopic == "get/all_data") {
+    sendBrightness();
+  }
+
 
   //***Code here to process the received package***
 
@@ -163,6 +199,33 @@ void updateLCD() {
   }
 }
 
+// dieu chinh do sang den
+void setBrightness(int value) {
+  int brightness_val = map(value, 0, 10, 100, 255);
+  curBrightness = brightness_val;
+}
+
+// gui do sang hien tai len cho web
+void sendBrightness() {
+  int val = map(curBrightness, 100, 255, 0, 10);
+  String payload = String(val);
+  // Serial.println(payload);
+  mqttClient.publish("light/cur", payload.c_str());
+  // Serial.println(payload.c_str());
+}
+
+// dong mo nap dung do an
+void openLid() {
+  if (isLocked) {
+    isLocked = false;
+    servo1.write(90);
+  }
+  else {
+    isLocked = true;
+    servo1.write(0);
+  }
+}
+
 
 void setup() {
   Serial.begin(115200);
@@ -207,37 +270,45 @@ void setup() {
   scale50.begin(CELL_50_DT_PIN, CELL_50_SCK_PIN);
   // Link: https://wokwi.com/projects/344192176616374868
 
-  
-  // 
-
 }
 
 void loop() {
+  // always check if client is disconnected, reconnect
+  if (!mqttClient.connected())
+    mqttConnect();
+
+  mqttClient.loop(); // giúp giữ kết nối với server và để hàm callback được gọi
+
   updateLCD();
   int distance = getDistance(); // cm
-  if(distance <= 5){
-    if(getBrightness() > 2531) // 2531 is stairway lighting 
+  if (distance <= 5 || isFed) {
+    // Serial.println(getBrightness());
+    if (getBrightness() > 2531) { // 2531 is stairway lighting
       analogWrite(LED_PIN, curBrightness);
-    else{
+      // Serial.println(curBrightness);
+    }
+    else {
       analogWrite(LED_PIN, 0);
     }
     playMelody();
     int weight_5 = getWeight(true);
-    if(weight_5 < 10){
+    if (weight_5 < 10) {
       servo2.write(90);
-      do{
+      do {
         weight_5 = getWeight(true);
-      } while(weight_5 < 30);
+      } while (weight_5 < 30);
+      isFed = false;
       servo2.write(0);
     }
   }
-  else{
+  else {
     analogWrite(LED_PIN, 0);
     servo2.write(0);
   }
 }
 
 void playMelody() {
+  if (isMuted) return;
   // Define the melody notes and durations
   // int melody[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_B4};
   int melody[] = {NOTE_C4, NOTE_E4, NOTE_G4, NOTE_B4};
