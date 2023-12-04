@@ -88,7 +88,8 @@
       "top": 253.55,
       "left": 134.4,
       "attrs": { "value": "100" }
-    }
+    },
+    { "type": "wokwi-ds1307", "id": "rtc1", "top": -120.6, "left": 153.7, "attrs": {} }
   ],
   "connections": [
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
@@ -129,20 +130,24 @@
     [ "lcd2:SDA", "esp:21", "green", [ "h-38.4", "v0.2" ] ],
     [ "lcd2:SCL", "esp:22", "purple", [ "h-48", "v67.5", "h-278.4", "v-48" ] ],
     [ "ultrasonic1:ECHO", "esp:19", "violet", [ "v19.2", "h-442.4", "v-201.6" ] ],
+    [ "esp:14", "servo1:PWM", "cyan", [ "h-28.65", "v201.6" ] ],
+    [ "bb1:10t.b", "esp:5", "blue", [ "v0", "h-115.2", "v-86.4" ] ],
+    [ "rtc1:GND", "bb1:tn.6", "black", [ "h0" ] ],
+    [ "rtc1:5V", "bb1:tp.7", "red", [ "h0" ] ],
+    [ "rtc1:SDA", "esp:21", "green", [ "h-211.2", "v220.5" ] ],
+    [ "rtc1:SCL", "esp:22", "purple", [ "h-192", "v182.2" ] ],
     [ "led1:A", "bb1:8b.f", "", [ "$bb" ] ],
     [ "led1:C", "bb1:9b.f", "", [ "$bb" ] ],
+    [ "bz1:1", "bb1:15t.a", "", [ "$bb" ] ],
+    [ "bz1:2", "bb1:16t.a", "", [ "$bb" ] ],
+    [ "r1:1", "bb1:2b.g", "", [ "$bb" ] ],
+    [ "r1:2", "bb1:8b.g", "", [ "$bb" ] ],
+    [ "r2:1", "bb1:10t.c", "", [ "$bb" ] ],
+    [ "r2:2", "bb1:16t.c", "", [ "$bb" ] ],
     [ "ultrasonic1:VCC", "bb1:33b.i", "", [ "$bb" ] ],
     [ "ultrasonic1:TRIG", "bb1:34b.i", "", [ "$bb" ] ],
     [ "ultrasonic1:ECHO", "bb1:35b.i", "", [ "$bb" ] ],
-    [ "ultrasonic1:GND", "bb1:36b.i", "", [ "$bb" ] ],
-    [ "r1:1", "bb1:2b.g", "", [ "$bb" ] ],
-    [ "r1:2", "bb1:8b.g", "", [ "$bb" ] ],
-    [ "esp:14", "servo1:PWM", "cyan", [ "h-28.65", "v201.6" ] ],
-    [ "bz1:1", "bb1:15t.a", "", [ "$bb" ] ],
-    [ "bz1:2", "bb1:16t.a", "", [ "$bb" ] ],
-    [ "r2:1", "bb1:10t.c", "", [ "$bb" ] ],
-    [ "r2:2", "bb1:16t.c", "", [ "$bb" ] ],
-    [ "bb1:10t.b", "esp:5", "blue", [ "v0", "h-115.2", "v-86.4" ] ]
+    [ "ultrasonic1:GND", "bb1:36b.i", "", [ "$bb" ] ]
   ],
   "dependencies": {}
 }
