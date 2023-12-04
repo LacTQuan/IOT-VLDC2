@@ -5,6 +5,8 @@
 #include "DHTesp.h"
 #include "HX711.h"
 #include <string>
+#include <RTClib.h>
+
 
 const char* ssid = "Wokwi-GUEST";
 const char* password = "";
@@ -27,7 +29,18 @@ bool isMuted = false;
 bool isLocked = true;
 // cho an thu cong
 bool isFed = false;
+//real time  clock
+RTC_DS1307 rtc;
+DateTime now;
 
+// amount for each eating time
+// [0]: 8 - 10h
+// [1]: 12 - 14h
+// [2]: 16 - 18h
+// [3]: 20 - 22h
+float eatingSchedule[5] = {0, 0, 0, 0, 0};
+float eatingAmount[4] = {0, 0, 0, 0};
+int idx = 1;
 
 // Define pins for LED
 #define LED_PIN 2
@@ -77,7 +90,6 @@ void wifiConnect() {
   }
   lcd.println(" Connected!");
 }
-
 void mqttConnect() {
   while (!mqttClient.connected()) {
     lcd.println("Attemping MQTT connection...");
@@ -92,6 +104,7 @@ void mqttConnect() {
       mqttClient.subscribe("get/all_data");
       mqttClient.subscribe("light/set");
       mqttClient.subscribe("lid/open");
+      mqttClient.subscribe("schedule/set");
       mqttClient.subscribe("feed");
     }
     else {
@@ -100,7 +113,6 @@ void mqttConnect() {
     }
   }
 }
-
 //MQTT Receiver
 void callback(char* topic, byte* message, unsigned int length) {
   Serial.println(topic);
@@ -132,23 +144,28 @@ void callback(char* topic, byte* message, unsigned int length) {
   else if (strTopic == "get/all_data") {
     sendBrightness();
   }
+  else if (strTopic == "schedule/set") {
+    eatingSchedule[idx] = strMsg.toInt();
+    Serial.print(idx);
+    Serial.print(": ");
+    Serial.println(eatingSchedule[idx]);
+    idx++;
+    if(idx == 5) idx = 1;
+  } 
 
 
   //***Code here to process the received package***
 
 }
-
 // DHT 22
 String getTemp() {
   TempAndHumidity data = dhtSensor.getTempAndHumidity();
   return String(data.temperature, 2);
 }
-
 String getHumid() {
   TempAndHumidity data = dhtSensor.getTempAndHumidity();
   return String(data.humidity, 2);
 }
-
 // Ultrasonic sensor
 long getDistance() {
   digitalWrite(ULTRASONIC_TRIG_PIN, LOW);
@@ -162,29 +179,24 @@ long getDistance() {
 
   return distanceCm;
 }
-
 // Load
 double getWeight(bool is5) {
   if (is5) return scale5.read() * 1000.0 / 420.0;
   return scale50.read() * 1000.0 / 420.0;
 }
-
 // Photoresistor
 int getBrightness() {
   return analogRead(LDR_PIN);
 }
-
 // Load cell for food container
 String getFoodAmount() {
   return String(100.0 * getWeight(false) / MAX_FOOD);
 }
-
 // Mo va dong nap hop dung do an
 void lockUnlockLid(bool lock) {
   if (lock) servo1.write(0);
   else servo1.write(90);
 }
-
 // In cac thong so ra man LCD, moi 5s cap nhat mot lan
 long start = 0;
 void updateLCD() {
@@ -198,22 +210,19 @@ void updateLCD() {
     start = millis();
   }
 }
-
 // dieu chinh do sang den
 void setBrightness(int value) {
   int brightness_val = map(value, 0, 10, 100, 255);
   curBrightness = brightness_val;
 }
-
 // gui do sang hien tai len cho web
 void sendBrightness() {
-  int val = map(curBrightness, 100, 255, 0, 10);
+  int val = map(curBrightness, 0, 255, 0, 10);
   String payload = String(val);
   // Serial.println(payload);
   mqttClient.publish("light/cur", payload.c_str());
   // Serial.println(payload.c_str());
 }
-
 // dong mo nap dung do an
 void openLid() {
   if (isLocked) {
@@ -225,8 +234,44 @@ void openLid() {
     servo1.write(0);
   }
 }
+int getCurrentEatingTime(){
+  int hour = now.hour();
 
+  if(hour == 8 || hour == 9)
+    return 1;
+  if(hour == 12 || hour == 13)
+    return 2;
+  if(hour == 16 || hour == 17)
+    return 3;
+  if(hour == 20 || hour == 21)
+    return 4;
+  // chỉ để test h hiện tại.
+  // if(hour == 15)
+  //   return 2;
+  
+  return 0;
+}
+void sendFoodConsumed(){
+  int currentEatingTime;
 
+  int hour = now.hour();
+  int minute = now.minute();
+
+  if(hour == 10 && minute == 0) currentEatingTime = 0;
+  if(hour == 14 && minute == 0) currentEatingTime = 1;
+  if(hour == 18 && minute == 0) currentEatingTime = 2;
+  if(hour == 22 && minute == 0) currentEatingTime = 3;
+
+  // Để test
+  currentEatingTime = 2;
+
+  float val = eatingAmount[currentEatingTime];
+  Serial.println(val);
+  
+  String payload = String(val);
+  // Serial.println(payload);
+  mqttClient.publish("home/foodConsumed", payload.c_str());
+}
 void setup() {
   Serial.begin(115200);
 
@@ -269,15 +314,25 @@ void setup() {
   scale5.begin(CELL_5_DT_PIN, CELL_5_SCK_PIN);
   scale50.begin(CELL_50_DT_PIN, CELL_50_SCK_PIN);
   // Link: https://wokwi.com/projects/344192176616374868
+  
+  // Real-Time Clock
+  if (! rtc.begin()) {
+    Serial.println("Couldn't find RTC");
+    Serial.flush();
+    abort();
+  }
+  now = rtc.now();
 
 }
-
 void loop() {
   // always check if client is disconnected, reconnect
   if (!mqttClient.connected())
     mqttConnect();
 
   mqttClient.loop(); // giúp giữ kết nối với server và để hàm callback được gọi
+
+  int currentEatingTime = getCurrentEatingTime();
+  sendFoodConsumed();
 
   updateLCD();
   int distance = getDistance(); // cm
@@ -292,14 +347,24 @@ void loop() {
     }
     playMelody();
     int weight_5 = getWeight(true);
-    if (weight_5 < 10) {
+    if (weight_5 < 1000 
+        && eatingSchedule[currentEatingTime] > 0 
+        && getWeight(false) > 0) {
       servo2.write(90);
       do {
+        Serial.println(eatingSchedule[currentEatingTime]);
+        Serial.println(eatingAmount[currentEatingTime - 1]);
         weight_5 = getWeight(true);
-      } while (weight_5 < 30);
-      isFed = false;
+        delay(3000);
+        eatingSchedule[currentEatingTime] = eatingSchedule[currentEatingTime] - 500;
+        eatingAmount[currentEatingTime - 1] = eatingAmount[currentEatingTime - 1] + 500;
+      } while (weight_5 < 2000 
+              && eatingSchedule[currentEatingTime] > 0
+              && getWeight(false) > 0);
+
       servo2.write(0);
     }
+    isFed = false;
   }
   else {
     analogWrite(LED_PIN, 0);
