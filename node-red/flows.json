@@ -44,7 +44,7 @@
         "name": "",
         "events": "all",
         "x": 620,
-        "y": 100,
+        "y": 60,
         "wires": [
             []
         ]
@@ -99,7 +99,7 @@
         "type": "function",
         "z": "391536298c885e5a",
         "name": "Authenticate",
-        "func": "if (msg.payload.username == \"admin\" && msg.payload.password == \"admin\")\n    msg.payload.isValid = 1;\nelse msg.payload.isValid = 0;\n\nreturn msg;",
+        "func": "if (msg.payload.username == flow.get(\"username\") && msg.payload.password == flow.get(\"password\"))\n    msg.payload.isValid = 1;\nelse msg.payload.isValid = 0;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -618,8 +618,8 @@
         "z": "391536298c885e5a",
         "name": "PET PROFILE",
         "info": "",
-        "x": 200,
-        "y": 2680,
+        "x": 160,
+        "y": 3780,
         "wires": []
     },
     {
@@ -639,8 +639,8 @@
         "font": "Arial,Arial,Helvetica,sans-serif",
         "fontSize": "20",
         "color": "#ffffff",
-        "x": 550,
-        "y": 2640,
+        "x": 710,
+        "y": 3840,
         "wires": []
     },
     {
@@ -660,8 +660,8 @@
         "font": "Arial,Arial,Helvetica,sans-serif",
         "fontSize": "20",
         "color": "#ffffff",
-        "x": 570,
-        "y": 2720,
+        "x": 710,
+        "y": 3900,
         "wires": []
     },
     {
@@ -702,15 +702,11 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 2760,
+        "y": 3860,
         "wires": [
             [
-                "dfcfc27f07dc0694",
-                "209a17508df5be2a",
-                "977f32b41377480e",
-                "af6fb7e7a570cbda",
-                "06b04da342465cc7",
-                "f445b04f15f1257b"
+                "f445b04f15f1257b",
+                "e4410b499b5adfd8"
             ]
         ]
     },
@@ -731,8 +727,8 @@
         "font": "Arial,Arial,Helvetica,sans-serif",
         "fontSize": "20",
         "color": "#ffffff",
-        "x": 520,
-        "y": 2800,
+        "x": 720,
+        "y": 3960,
         "wires": []
     },
     {
@@ -752,8 +748,8 @@
         "font": "Arial,Arial,Helvetica,sans-serif",
         "fontSize": "20",
         "color": "#ffffff",
-        "x": 510,
-        "y": 2900,
+        "x": 730,
+        "y": 4020,
         "wires": []
     },
     {
@@ -773,8 +769,8 @@
         "font": "Arial,Arial,Helvetica,sans-serif",
         "fontSize": "20",
         "color": "#ffffff",
-        "x": 490,
-        "y": 2960,
+        "x": 690,
+        "y": 4080,
         "wires": []
     },
     {
@@ -798,7 +794,7 @@
         "topic": "topic",
         "topicType": "msg",
         "x": 210,
-        "y": 3080,
+        "y": 4180,
         "wires": [
             [
                 "bb167a9c94225de9"
@@ -826,7 +822,7 @@
             {
                 "label": "Date of birth",
                 "value": "dob",
-                "type": "date",
+                "type": "text",
                 "required": true,
                 "rows": null
             },
@@ -867,10 +863,11 @@
         "splitLayout": true,
         "className": "",
         "x": 380,
-        "y": 3180,
+        "y": 4280,
         "wires": [
             [
-                "6ed7e4e447b4b697"
+                "6ed7e4e447b4b697",
+                "bb9d1a3b77a84248"
             ]
         ]
     },
@@ -887,7 +884,7 @@
         "finalize": "",
         "libs": [],
         "x": 470,
-        "y": 3080,
+        "y": 4180,
         "wires": [
             [
                 "6c3a224304c54c64"
@@ -901,7 +898,7 @@
         "name": "",
         "events": "all",
         "x": 720,
-        "y": 3060,
+        "y": 4160,
         "wires": [
             []
         ]
@@ -919,7 +916,7 @@
         "finalize": "",
         "libs": [],
         "x": 270,
-        "y": 3000,
+        "y": 4100,
         "wires": [
             [
                 "2dd98cf7de729bfc"
@@ -933,7 +930,7 @@
         "name": "",
         "events": "all",
         "x": 480,
-        "y": 3020,
+        "y": 4120,
         "wires": [
             []
         ]
@@ -951,7 +948,7 @@
         "finalize": "",
         "libs": [],
         "x": 670,
-        "y": 3180,
+        "y": 4280,
         "wires": [
             [
                 "6485e2cf5f510a68"
@@ -965,7 +962,7 @@
         "name": "",
         "events": "all",
         "x": 920,
-        "y": 3140,
+        "y": 4240,
         "wires": [
             []
         ]
@@ -986,8 +983,8 @@
         "z": "391536298c885e5a",
         "name": "SETTINGS",
         "info": "",
-        "x": 500,
-        "y": 2440,
+        "x": 120,
+        "y": 2720,
         "wires": []
     },
     {
@@ -1011,11 +1008,12 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 550,
-        "y": 2520,
+        "x": 70,
+        "y": 2820,
         "wires": [
             [
-                "64f4db34ce91c7bc"
+                "a137e8081e53af1a",
+                "9201753eac3c5551"
             ]
         ]
     },
@@ -1036,8 +1034,8 @@
         "font": "",
         "fontSize": "20",
         "color": "#ffffff",
-        "x": 750,
-        "y": 2440,
+        "x": 690,
+        "y": 2820,
         "wires": []
     },
     {
@@ -1060,10 +1058,12 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 900,
-        "y": 2440,
+        "x": 100,
+        "y": 3140,
         "wires": [
-            []
+            [
+                "33d6c7c15540ea59"
+            ]
         ]
     },
     {
@@ -1071,7 +1071,7 @@
         "type": "ui_text",
         "z": "391536298c885e5a",
         "group": "ca32dfb2ec8ab7f1",
-        "order": 3,
+        "order": 5,
         "width": 6,
         "height": 1,
         "name": "",
@@ -1083,8 +1083,8 @@
         "font": "Arial,Arial,Helvetica,sans-serif",
         "fontSize": "20",
         "color": "#ffffff",
-        "x": 710,
-        "y": 2560,
+        "x": 850,
+        "y": 2840,
         "wires": []
     },
     {
@@ -1095,7 +1095,7 @@
         "label": "On / Off",
         "tooltip": "",
         "group": "ca32dfb2ec8ab7f1",
-        "order": 4,
+        "order": 6,
         "width": 3,
         "height": 1,
         "passthru": true,
@@ -1113,10 +1113,13 @@
         "offcolor": "",
         "animate": false,
         "className": "",
-        "x": 900,
-        "y": 2560,
+        "x": 880,
+        "y": 2880,
         "wires": [
-            []
+            [
+                "651d2f86a1edcd7d",
+                "72d4a1c08bdd7fdf"
+            ]
         ]
     },
     {
@@ -1326,7 +1329,7 @@
         "correl": "",
         "expiry": "",
         "broker": "765ac9edbab7f418",
-        "x": 490,
+        "x": 510,
         "y": 520,
         "wires": []
     },
@@ -1354,9 +1357,7 @@
         "x": 270,
         "y": 540,
         "wires": [
-            [
-                "64ae1a8566108f76"
-            ]
+            []
         ]
     },
     {
@@ -2054,6 +2055,1095 @@
         "wires": []
     },
     {
+        "id": "a137e8081e53af1a",
+        "type": "file in",
+        "z": "391536298c885e5a",
+        "name": "",
+        "filename": "D:\\IOT\\auth.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 280,
+        "y": 2800,
+        "wires": [
+            [
+                "c237e4a3109931e4"
+            ]
+        ]
+    },
+    {
+        "id": "c237e4a3109931e4",
+        "type": "json",
+        "z": "391536298c885e5a",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 450,
+        "y": 2860,
+        "wires": [
+            [
+                "0e35939414f6d303",
+                "1d22be368e7288a4",
+                "148a374981203345",
+                "3fb129b72ec8e1f0",
+                "64f4db34ce91c7bc",
+                "dd70edfd4ad23b34",
+                "1c0c251e3620f64f"
+            ]
+        ]
+    },
+    {
+        "id": "3fb129b72ec8e1f0",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Set notification",
+        "func": "if (msg.payload.noti == 1) msg.payload = true;\nelse msg.payload = false;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 2900,
+        "wires": [
+            [
+                "d447eb4969a25a75"
+            ]
+        ]
+    },
+    {
+        "id": "148a374981203345",
+        "type": "ui_text",
+        "z": "391536298c885e5a",
+        "group": "ca32dfb2ec8ab7f1",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Username: ",
+        "format": "{{msg.payload.username}}",
+        "layout": "row-left",
+        "className": "",
+        "style": true,
+        "font": "",
+        "fontSize": "20",
+        "color": "#ffffff",
+        "x": 710,
+        "y": 2960,
+        "wires": []
+    },
+    {
+        "id": "1d22be368e7288a4",
+        "type": "ui_text",
+        "z": "391536298c885e5a",
+        "group": "ca32dfb2ec8ab7f1",
+        "order": 7,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Password: ",
+        "format": "{{msg.payload.password}}",
+        "layout": "row-left",
+        "className": "",
+        "style": true,
+        "font": "",
+        "fontSize": "20",
+        "color": "#ffffff",
+        "x": 690,
+        "y": 3020,
+        "wires": []
+    },
+    {
+        "id": "0e35939414f6d303",
+        "type": "ui_text",
+        "z": "391536298c885e5a",
+        "group": "ca32dfb2ec8ab7f1",
+        "order": 9,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "PIN code: ",
+        "format": "{{msg.payload.pin}}",
+        "layout": "row-left",
+        "className": "",
+        "style": true,
+        "font": "",
+        "fontSize": "20",
+        "color": "#ffffff",
+        "x": 660,
+        "y": 3080,
+        "wires": []
+    },
+    {
+        "id": "e14fc6f6011ae2da",
+        "type": "ui_button",
+        "z": "391536298c885e5a",
+        "name": "",
+        "group": "ca32dfb2ec8ab7f1",
+        "order": 8,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Change password",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 3220,
+        "wires": [
+            [
+                "1d0ed55c0563fc76"
+            ]
+        ]
+    },
+    {
+        "id": "c074bc50e178e881",
+        "type": "ui_button",
+        "z": "391536298c885e5a",
+        "name": "",
+        "group": "ca32dfb2ec8ab7f1",
+        "order": 10,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Change PIN",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 3300,
+        "wires": [
+            [
+                "85785f944d5650cd"
+            ]
+        ]
+    },
+    {
+        "id": "8daafb23e63cd716",
+        "type": "ui_form",
+        "z": "391536298c885e5a",
+        "name": "",
+        "label": "Change email",
+        "group": "494a9fd41ac89a9d",
+        "order": 11,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Email",
+                "value": "email",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "email": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 140,
+        "y": 3420,
+        "wires": [
+            [
+                "b837be01d2d38ffa",
+                "db34ed46867263d5"
+            ]
+        ]
+    },
+    {
+        "id": "c82f85402fd63f60",
+        "type": "ui_form",
+        "z": "391536298c885e5a",
+        "name": "",
+        "label": "Change password",
+        "group": "6b19a6192710be8b",
+        "order": 12,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "New password",
+                "value": "password",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "password": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 130,
+        "y": 3540,
+        "wires": [
+            [
+                "dae89873c9be1f5f",
+                "1da8526ae576bd13"
+            ]
+        ]
+    },
+    {
+        "id": "c7e34bdc2a96327e",
+        "type": "ui_form",
+        "z": "391536298c885e5a",
+        "name": "",
+        "label": "Change PIN code",
+        "group": "851fee28e1842b00",
+        "order": 13,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "New PIN code",
+                "value": "pin",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "pin": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 130,
+        "y": 3640,
+        "wires": [
+            [
+                "9ba85a5487fab7b3",
+                "26b12c90dfb1f7da"
+            ]
+        ]
+    },
+    {
+        "id": "9201753eac3c5551",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Hide update forms ",
+        "func": "msg.payload = {\n    \"group\": {\n        \"hide\": [\"Settings_EmailUpdate\", \"Settings_PasswordUpdate\", \"Settings_PinUpdate\"]\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 2980,
+        "wires": [
+            [
+                "bec18280715d6939"
+            ]
+        ]
+    },
+    {
+        "id": "bec18280715d6939",
+        "type": "ui_ui_control",
+        "z": "391536298c885e5a",
+        "name": "",
+        "events": "all",
+        "x": 400,
+        "y": 3020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33d6c7c15540ea59",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Unhide email form",
+        "func": "msg.payload = {\n    \"group\": {\n        \"show\": [\"Settings_EmailUpdate\"]\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 3140,
+        "wires": [
+            [
+                "1c60b848904b5d33"
+            ]
+        ]
+    },
+    {
+        "id": "1c60b848904b5d33",
+        "type": "ui_ui_control",
+        "z": "391536298c885e5a",
+        "name": "",
+        "events": "all",
+        "x": 620,
+        "y": 3200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1d0ed55c0563fc76",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Unhide password form",
+        "func": "msg.payload = {\n    \"group\": {\n        \"show\": [\"Settings_PasswordUpdate\"]\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 3220,
+        "wires": [
+            [
+                "1c60b848904b5d33"
+            ]
+        ]
+    },
+    {
+        "id": "85785f944d5650cd",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Unhide PIN form",
+        "func": "msg.payload = {\n    \"group\": {\n        \"show\": [\"Settings_PinUpdate\"]\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 3300,
+        "wires": [
+            [
+                "1c60b848904b5d33"
+            ]
+        ]
+    },
+    {
+        "id": "847f0287a5eb9b8b",
+        "type": "file",
+        "z": "391536298c885e5a",
+        "name": "",
+        "filename": "D:\\IOT\\auth.txt",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1040,
+        "y": 3480,
+        "wires": [
+            [
+                "9201753eac3c5551"
+            ]
+        ]
+    },
+    {
+        "id": "b837be01d2d38ffa",
+        "type": "file in",
+        "z": "391536298c885e5a",
+        "name": "",
+        "filename": "D:\\IOT\\auth.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 380,
+        "y": 3380,
+        "wires": [
+            [
+                "d13ca893077b2d66"
+            ]
+        ]
+    },
+    {
+        "id": "d13ca893077b2d66",
+        "type": "json",
+        "z": "391536298c885e5a",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 550,
+        "y": 3360,
+        "wires": [
+            [
+                "fac2df3a29cf9667"
+            ]
+        ]
+    },
+    {
+        "id": "fac2df3a29cf9667",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Set new email",
+        "func": "msg.payload.email = flow.get(\"newEmail\");\nflow.set(\"email\", msg.payload.email);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 3380,
+        "wires": [
+            [
+                "847f0287a5eb9b8b",
+                "64f4db34ce91c7bc"
+            ]
+        ]
+    },
+    {
+        "id": "db34ed46867263d5",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Store new email",
+        "func": "flow.set(\"newEmail\", msg.payload.email);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 3440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dae89873c9be1f5f",
+        "type": "file in",
+        "z": "391536298c885e5a",
+        "name": "",
+        "filename": "D:\\IOT\\auth.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 340,
+        "y": 3520,
+        "wires": [
+            [
+                "d16cb7683661e853"
+            ]
+        ]
+    },
+    {
+        "id": "9ba85a5487fab7b3",
+        "type": "file in",
+        "z": "391536298c885e5a",
+        "name": "",
+        "filename": "D:\\IOT\\auth.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 380,
+        "y": 3620,
+        "wires": [
+            [
+                "e63b0daee870e2ca"
+            ]
+        ]
+    },
+    {
+        "id": "1da8526ae576bd13",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Store new password",
+        "func": "flow.set(\"newPassword\", msg.payload.password);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 3580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "26b12c90dfb1f7da",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Store new pin code",
+        "func": "flow.set(\"newPin\", msg.payload.pin);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 3660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d16cb7683661e853",
+        "type": "json",
+        "z": "391536298c885e5a",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 510,
+        "y": 3520,
+        "wires": [
+            [
+                "216afb68b34295e3"
+            ]
+        ]
+    },
+    {
+        "id": "216afb68b34295e3",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Set new password",
+        "func": "msg.payload.password = flow.get(\"newPassword\");\nflow.set(\"password\", msg.payload.password);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 3500,
+        "wires": [
+            [
+                "847f0287a5eb9b8b",
+                "1d22be368e7288a4"
+            ]
+        ]
+    },
+    {
+        "id": "e63b0daee870e2ca",
+        "type": "json",
+        "z": "391536298c885e5a",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 540,
+        "y": 3620,
+        "wires": [
+            [
+                "9722ab1ee77dc4db"
+            ]
+        ]
+    },
+    {
+        "id": "9722ab1ee77dc4db",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Set new pin",
+        "func": "msg.payload.pin = flow.get(\"newPin\");\nflow.set(\"pin\", msg.payload.pin);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 3620,
+        "wires": [
+            [
+                "847f0287a5eb9b8b",
+                "0e35939414f6d303"
+            ]
+        ]
+    },
+    {
+        "id": "1c0c251e3620f64f",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Set Auth Data",
+        "func": "flow.set(\"username\", msg.payload.username);\nflow.set(\"password\", msg.payload.password);\nflow.set(\"email\", msg.payload.email);\nflow.set(\"pin\", msg.payload.pin);\nflow.set(\"noti\", msg.payload.noti);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 2740,
+        "wires": [
+            [
+                "586c5e4eceedec53",
+                "620a9284d8f2c958"
+            ]
+        ]
+    },
+    {
+        "id": "651d2f86a1edcd7d",
+        "type": "file in",
+        "z": "391536298c885e5a",
+        "name": "",
+        "filename": "D:\\IOT\\auth.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1080,
+        "y": 2860,
+        "wires": [
+            [
+                "9682e39d7ecc58dd"
+            ]
+        ]
+    },
+    {
+        "id": "9682e39d7ecc58dd",
+        "type": "json",
+        "z": "391536298c885e5a",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1170,
+        "y": 2940,
+        "wires": [
+            [
+                "5c4bb66c58accf20"
+            ]
+        ]
+    },
+    {
+        "id": "72d4a1c08bdd7fdf",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Store new noti",
+        "func": "flow.set(\"newNoti\", msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 3020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5c4bb66c58accf20",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Set new noti",
+        "func": "msg.payload.noti = flow.get(\"newNoti\");\nflow.set(\"noti\", msg.payload.noti);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 3040,
+        "wires": [
+            [
+                "847f0287a5eb9b8b"
+            ]
+        ]
+    },
+    {
+        "id": "e4410b499b5adfd8",
+        "type": "file in",
+        "z": "391536298c885e5a",
+        "name": "",
+        "filename": "D:\\IOT\\profile.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 320,
+        "y": 3880,
+        "wires": [
+            [
+                "077f077583aab44f"
+            ]
+        ]
+    },
+    {
+        "id": "077f077583aab44f",
+        "type": "json",
+        "z": "391536298c885e5a",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 500,
+        "y": 3900,
+        "wires": [
+            [
+                "dfcfc27f07dc0694",
+                "209a17508df5be2a",
+                "977f32b41377480e",
+                "af6fb7e7a570cbda",
+                "06b04da342465cc7"
+            ]
+        ]
+    },
+    {
+        "id": "bb9d1a3b77a84248",
+        "type": "file",
+        "z": "391536298c885e5a",
+        "name": "",
+        "filename": "D:\\IOT\\profile.txt",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 660,
+        "y": 4380,
+        "wires": [
+            [
+                "e4410b499b5adfd8"
+            ]
+        ]
+    },
+    {
+        "id": "d548f217fa2a336c",
+        "type": "mqtt in",
+        "z": "391536298c885e5a",
+        "name": "",
+        "topic": "alert/food",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "765ac9edbab7f418",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 80,
+        "y": 4520,
+        "wires": [
+            [
+                "57a322cc5015bdd8"
+            ]
+        ]
+    },
+    {
+        "id": "4065b169dcc184af",
+        "type": "mqtt in",
+        "z": "391536298c885e5a",
+        "name": "",
+        "topic": "alert/env",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "765ac9edbab7f418",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 80,
+        "y": 4640,
+        "wires": [
+            [
+                "57a322cc5015bdd8"
+            ]
+        ]
+    },
+    {
+        "id": "ee37085cd0131480",
+        "type": "e-mail",
+        "z": "391536298c885e5a",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "Send email",
+        "x": 950,
+        "y": 4600,
+        "wires": []
+    },
+    {
+        "id": "a72cdaa400f6d526",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Setup email",
+        "func": "msg.payload = \"The device is running low on supplies. Can you please restock it at your earliest convenience?\";\nmsg.topic = \"FOOD RUNNING OUT\";\nmsg.to = flow.get(\"email\");\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 4520,
+        "wires": [
+            [
+                "ee37085cd0131480",
+                "d20cfdf3663a14db"
+            ]
+        ]
+    },
+    {
+        "id": "7e68e2e1ccc69d47",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Setup email",
+        "func": "msg.payload = \"It seems like the temperature or humidity levels are a bit extreme. You might want to check on things and make adjustments if needed.\";\nmsg.topic = \"TEMPERATURE AND HUMIDITY LEVELS DETECTED OUTSIDE NORMAL RANGE\";\nmsg.to = flow.get(\"email\");\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 4640,
+        "wires": [
+            [
+                "50c3948ccc0cd88c"
+            ]
+        ]
+    },
+    {
+        "id": "50c3948ccc0cd88c",
+        "type": "e-mail",
+        "z": "391536298c885e5a",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "Send email",
+        "x": 930,
+        "y": 4700,
+        "wires": []
+    },
+    {
+        "id": "c9be57c8332e56ef",
+        "type": "inject",
+        "z": "391536298c885e5a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 460,
+        "y": 4460,
+        "wires": [
+            [
+                "a72cdaa400f6d526"
+            ]
+        ]
+    },
+    {
+        "id": "d20cfdf3663a14db",
+        "type": "debug",
+        "z": "391536298c885e5a",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 4440,
+        "wires": []
+    },
+    {
+        "id": "586c5e4eceedec53",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "function 4",
+        "func": "msg.payload = flow.get(\"email\");\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 2680,
+        "wires": [
+            [
+                "851724d894c43a3a"
+            ]
+        ]
+    },
+    {
+        "id": "851724d894c43a3a",
+        "type": "debug",
+        "z": "391536298c885e5a",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 2660,
+        "wires": []
+    },
+    {
+        "id": "dd70edfd4ad23b34",
+        "type": "debug",
+        "z": "391536298c885e5a",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 2780,
+        "wires": []
+    },
+    {
+        "id": "620a9284d8f2c958",
+        "type": "debug",
+        "z": "391536298c885e5a",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 2740,
+        "wires": []
+    },
+    {
+        "id": "2bda864e430f32d1",
+        "type": "switch",
+        "z": "391536298c885e5a",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 550,
+        "y": 4560,
+        "wires": [
+            [
+                "a72cdaa400f6d526",
+                "7e68e2e1ccc69d47"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "57a322cc5015bdd8",
+        "type": "function",
+        "z": "391536298c885e5a",
+        "name": "Check notification is turn on or not",
+        "func": "if (flow.get(\"noti\") == true) msg.payload = 1;\nelse msg.payload = 0;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 4560,
+        "wires": [
+            [
+                "2bda864e430f32d1"
+            ]
+        ]
+    },
+    {
+        "id": "5226b50cebdf6586",
+        "type": "ui_spacer",
+        "z": "391536298c885e5a",
+        "name": "spacer",
+        "group": "ca32dfb2ec8ab7f1",
+        "order": 4,
+        "width": 3,
+        "height": 1
+    },
+    {
         "id": "781ac152bb694f16",
         "type": "ui_group",
         "name": "Login form",
@@ -2125,8 +3215,8 @@
         "name": "Email",
         "tab": "b04556f58b734d6e",
         "order": 1,
-        "disp": true,
-        "width": 9,
+        "disp": false,
+        "width": "9",
         "collapse": false,
         "className": ""
     },
@@ -2259,6 +3349,39 @@
         "sessionExpiry": ""
     },
     {
+        "id": "494a9fd41ac89a9d",
+        "type": "ui_group",
+        "name": "EmailUpdate",
+        "tab": "b04556f58b734d6e",
+        "order": 2,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6b19a6192710be8b",
+        "type": "ui_group",
+        "name": "PasswordUpdate",
+        "tab": "b04556f58b734d6e",
+        "order": 3,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "851fee28e1842b00",
+        "type": "ui_group",
+        "name": "PinUpdate",
+        "tab": "b04556f58b734d6e",
+        "order": 4,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
         "id": "ce5ab49963467673",
         "type": "ui_tab",
         "d": true,
@@ -2307,7 +3430,7 @@
     {
         "id": "7b0bd463e3250132",
         "type": "ui_tab",
-        "name": "FoodSchedule",
+        "name": "Food schedule",
         "icon": "dashboard",
         "order": 3,
         "disabled": false,
