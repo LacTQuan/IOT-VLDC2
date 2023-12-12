@@ -385,12 +385,12 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": true,
+        "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 210,
+        "x": 200,
         "y": 660,
         "wires": [
             [
@@ -476,7 +476,7 @@
         "to": "",
         "reg": false,
         "x": 440,
-        "y": 700,
+        "y": 720,
         "wires": [
             [
                 "a64dfed4d165a7a7"
@@ -548,8 +548,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 660,
-        "y": 820,
+        "x": 580,
+        "y": 900,
         "wires": [
             []
         ]
@@ -566,8 +566,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 820,
+        "x": 360,
+        "y": 900,
         "wires": [
             [
                 "cc585adc95fec266"
@@ -595,8 +595,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 210,
-        "y": 820,
+        "x": 130,
+        "y": 900,
         "wires": [
             [
                 "403b335eb265623a"
@@ -641,7 +641,7 @@
         "fontSize": "20",
         "color": "#ffffff",
         "x": 770,
-        "y": 3900,
+        "y": 3880,
         "wires": []
     },
     {
@@ -674,7 +674,7 @@
         "repeat": "",
         "crontab": "",
         "once": true,
-        "onceDelay": 0.1,
+        "onceDelay": "0.5",
         "topic": "",
         "x": 110,
         "y": 3960,
@@ -948,8 +948,8 @@
         "z": "f9f1080903b14d71",
         "name": "DEVICE MANAGER",
         "info": "",
-        "x": 270,
-        "y": 1740,
+        "x": 130,
+        "y": 1720,
         "wires": []
     },
     {
@@ -981,7 +981,7 @@
         "repeat": "",
         "crontab": "",
         "once": true,
-        "onceDelay": 0.1,
+        "onceDelay": "0.5",
         "topic": "",
         "x": 70,
         "y": 2820,
@@ -1097,24 +1097,6 @@
         ]
     },
     {
-        "id": "55e07fb423b28080",
-        "type": "mqtt out",
-        "z": "f9f1080903b14d71",
-        "name": "",
-        "topic": "buzzer/mute",
-        "qos": "2",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "765ac9edbab7f418",
-        "x": 450,
-        "y": 1800,
-        "wires": []
-    },
-    {
         "id": "a872c67349ce6da5",
         "type": "mqtt out",
         "z": "f9f1080903b14d71",
@@ -1128,8 +1110,8 @@
         "correl": "",
         "expiry": "",
         "broker": "765ac9edbab7f418",
-        "x": 500,
-        "y": 1860,
+        "x": 1300,
+        "y": 1800,
         "wires": []
     },
     {
@@ -1152,11 +1134,11 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 270,
-        "y": 1860,
+        "x": 830,
+        "y": 1640,
         "wires": [
             [
-                "a872c67349ce6da5"
+                "27c2bdd1d19aecda"
             ]
         ]
     },
@@ -1176,21 +1158,21 @@
         "topic": "topic",
         "topicType": "msg",
         "style": "",
-        "onvalue": "buzzer off",
-        "onvalueType": "str",
+        "onvalue": "true",
+        "onvalueType": "bool",
         "onicon": "",
         "oncolor": "",
-        "offvalue": "buzzer on",
-        "offvalueType": "str",
+        "offvalue": "false",
+        "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
         "animate": false,
         "className": "",
-        "x": 250,
-        "y": 1800,
+        "x": 930,
+        "y": 1780,
         "wires": [
             [
-                "55e07fb423b28080"
+                "497170fb21654482"
             ]
         ]
     },
@@ -1213,12 +1195,13 @@
         "max": 10,
         "step": 1,
         "className": "",
-        "x": 410,
-        "y": 1920,
+        "x": 750,
+        "y": 1880,
         "wires": [
             [
                 "da24c34ef6c55d8d",
-                "7bb38860cc07a88d"
+                "7bb38860cc07a88d",
+                "2c3458d84ab98bc1"
             ]
         ]
     },
@@ -1246,55 +1229,16 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 590,
-        "y": 1920,
+        "x": 930,
+        "y": 1840,
         "wires": []
-    },
-    {
-        "id": "0816c08a2a97cadc",
-        "type": "debug",
-        "z": "f9f1080903b14d71",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 400,
-        "y": 1980,
-        "wires": []
-    },
-    {
-        "id": "5dbd62d34d4fa89e",
-        "type": "mqtt in",
-        "z": "f9f1080903b14d71",
-        "name": "",
-        "topic": "light/cur",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "765ac9edbab7f418",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 230,
-        "y": 1960,
-        "wires": [
-            [
-                "b3acbf95667102b0",
-                "0816c08a2a97cadc"
-            ]
-        ]
     },
     {
         "id": "29dbafa29cda1643",
         "type": "mqtt out",
         "z": "f9f1080903b14d71",
         "name": "",
-        "topic": "get/all_data",
+        "topic": "home/data",
         "qos": "2",
         "retain": "",
         "respTopic": "",
@@ -1303,8 +1247,8 @@
         "correl": "",
         "expiry": "",
         "broker": "765ac9edbab7f418",
-        "x": 530,
-        "y": 580,
+        "x": 490,
+        "y": 520,
         "wires": []
     },
     {
@@ -1321,17 +1265,19 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "5",
         "crontab": "",
         "once": true,
-        "onceDelay": "2",
+        "onceDelay": "0.1",
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 330,
-        "y": 580,
+        "x": 290,
+        "y": 520,
         "wires": [
-            []
+            [
+                "29dbafa29cda1643"
+            ]
         ]
     },
     {
@@ -1348,8 +1294,8 @@
         "correl": "",
         "expiry": "",
         "broker": "765ac9edbab7f418",
-        "x": 600,
-        "y": 1960,
+        "x": 940,
+        "y": 1900,
         "wires": []
     },
     {
@@ -1366,8 +1312,8 @@
         "raw": false,
         "className": "",
         "topic": "Enter the PIN code",
-        "name": "",
-        "x": 630,
+        "name": "Ask for PIN",
+        "x": 1050,
         "y": 2060,
         "wires": [
             [
@@ -1379,15 +1325,15 @@
         "id": "b93651413ff6ee1a",
         "type": "function",
         "z": "f9f1080903b14d71",
-        "name": "Ask for PIN code",
-        "func": "msg.payload = \"You are about to open / close the lid\";\nreturn msg;",
+        "name": "Open message",
+        "func": "msg.payload = \"You are about to open the lid\";\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 450,
+        "x": 840,
         "y": 2060,
         "wires": [
             [
@@ -1399,15 +1345,15 @@
         "id": "b20f987abcf044b9",
         "type": "function",
         "z": "f9f1080903b14d71",
-        "name": "function 3",
-        "func": "if (msg.payload == \"123\") {\n    msg.payload = true;\n}\nelse msg.payload = false;\n\nreturn msg;",
+        "name": "Check PIN code",
+        "func": "// if (msg.payload == flow.get('pin')) {\nif (msg.payload == \"123\") {\n    msg.payload = true;\n}\nelse msg.payload = false;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
+        "x": 1260,
         "y": 2060,
         "wires": [
             [
@@ -1435,11 +1381,11 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 250,
-        "y": 2060,
+        "x": 210,
+        "y": 2040,
         "wires": [
             [
-                "b93651413ff6ee1a"
+                "260640558da16dea"
             ]
         ]
     },
@@ -1461,12 +1407,13 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 930,
+        "x": 1450,
         "y": 2060,
         "wires": [
             [
                 "70354c6d31e6f22a",
-                "2c6bf89578559c43"
+                "2c6bf89578559c43",
+                "30ddd69ee76acf77"
             ],
             [
                 "cddb1e9e09ef10ed"
@@ -1488,7 +1435,7 @@
         "className": "",
         "topic": "Operation successfully completed",
         "name": "",
-        "x": 1130,
+        "x": 1630,
         "y": 2000,
         "wires": []
     },
@@ -1507,7 +1454,7 @@
         "className": "",
         "topic": "Invalid PIN code",
         "name": "",
-        "x": 1130,
+        "x": 1630,
         "y": 2080,
         "wires": []
     },
@@ -1532,7 +1479,7 @@
         "topic": "topic",
         "topicType": "msg",
         "x": 240,
-        "y": 2140,
+        "y": 2240,
         "wires": [
             [
                 "c2cde41ad47a0097"
@@ -1553,7 +1500,7 @@
         "correl": "",
         "expiry": "",
         "broker": "765ac9edbab7f418",
-        "x": 1100,
+        "x": 1600,
         "y": 2040,
         "wires": []
     },
@@ -1562,7 +1509,7 @@
         "type": "mqtt out",
         "z": "f9f1080903b14d71",
         "name": "",
-        "topic": "",
+        "topic": "feed",
         "qos": "",
         "retain": "",
         "respTopic": "",
@@ -1572,7 +1519,7 @@
         "expiry": "",
         "broker": "765ac9edbab7f418",
         "x": 430,
-        "y": 2140,
+        "y": 2240,
         "wires": []
     },
     {
@@ -1947,12 +1894,10 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 240,
-        "y": 880,
+        "x": 160,
+        "y": 960,
         "wires": [
-            [
-                "ccd63af42886e45c"
-            ]
+            []
         ]
     },
     {
@@ -1967,8 +1912,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 440,
-        "y": 880,
+        "x": 360,
+        "y": 960,
         "wires": []
     },
     {
@@ -2214,7 +2159,7 @@
         "splitLayout": "",
         "className": "",
         "x": 390,
-        "y": 3640,
+        "y": 3620,
         "wires": [
             [
                 "1cf445f916683081"
@@ -3010,6 +2955,525 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "51accb245572eda4",
+        "type": "switch",
+        "z": "f9f1080903b14d71",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 590,
+        "y": 2080,
+        "wires": [
+            [
+                "b93651413ff6ee1a"
+            ],
+            [
+                "dc9ed9914cae050b"
+            ]
+        ]
+    },
+    {
+        "id": "dc9ed9914cae050b",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "Close message",
+        "func": "msg.payload = \"You are about to close the lid\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 2160,
+        "wires": [
+            [
+                "59abee0eb0d47112"
+            ]
+        ]
+    },
+    {
+        "id": "59abee0eb0d47112",
+        "type": "ui_toast",
+        "z": "f9f1080903b14d71",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "Show notification",
+        "x": 1050,
+        "y": 2160,
+        "wires": [
+            [
+                "807ecea94705669d",
+                "70354c6d31e6f22a",
+                "6cb82e5d03f59cdc"
+            ]
+        ]
+    },
+    {
+        "id": "807ecea94705669d",
+        "type": "mqtt out",
+        "z": "f9f1080903b14d71",
+        "name": "",
+        "topic": "lid/close",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "765ac9edbab7f418",
+        "x": 1300,
+        "y": 2160,
+        "wires": []
+    },
+    {
+        "id": "30ddd69ee76acf77",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "Update lock (lid) state",
+        "func": "msg.payload = [{id: \"1\"}, {$set: {\"isLocked\": false}}];\nmsg.operation = \"updateOne\";\nflow.set(\"isLocked\", false);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1600,
+        "y": 1940,
+        "wires": [
+            [
+                "6fcad37b312c9a92"
+            ]
+        ]
+    },
+    {
+        "id": "6fcad37b312c9a92",
+        "type": "mongodb3 in",
+        "z": "f9f1080903b14d71",
+        "service": "_ext_",
+        "configNode": "2119f505594bdcc1",
+        "name": "Write lock state",
+        "collection": "state",
+        "operation": "",
+        "x": 1830,
+        "y": 1940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6cb82e5d03f59cdc",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "Update lock (lid) state",
+        "func": "msg.payload = [{id: \"1\"}, {$set: {\"isLocked\": true}}];\nmsg.operation = \"updateOne\";\nflow.set(\"isLocked\", true);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1280,
+        "y": 2240,
+        "wires": [
+            [
+                "74feaa9ddf4c6b5d"
+            ]
+        ]
+    },
+    {
+        "id": "74feaa9ddf4c6b5d",
+        "type": "mongodb3 in",
+        "z": "f9f1080903b14d71",
+        "service": "_ext_",
+        "configNode": "2119f505594bdcc1",
+        "name": "Write lock state",
+        "collection": "state",
+        "operation": "",
+        "x": 1520,
+        "y": 2240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "87a09465c187c77b",
+        "type": "inject",
+        "z": "f9f1080903b14d71",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 1800,
+        "wires": [
+            [
+                "b900caee1f67a699"
+            ]
+        ]
+    },
+    {
+        "id": "539395e0c78d12f7",
+        "type": "mongodb3 in",
+        "z": "f9f1080903b14d71",
+        "service": "_ext_",
+        "configNode": "2119f505594bdcc1",
+        "name": "Read state",
+        "collection": "state",
+        "operation": "",
+        "x": 430,
+        "y": 1720,
+        "wires": [
+            [
+                "c92178a591b19718",
+                "f120fbd95d5ccaf8"
+            ]
+        ]
+    },
+    {
+        "id": "b900caee1f67a699",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "Read state",
+        "func": "msg.payload = {}\nmsg.operation = \"find.forEach\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 1780,
+        "wires": [
+            [
+                "539395e0c78d12f7"
+            ]
+        ]
+    },
+    {
+        "id": "c92178a591b19718",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "Store states",
+        "func": "flow.set('isLocked', msg.payload.isLocked);\nflow.set('isMuted', msg.payload.isMuted);\nflow.set('curBrightness', msg.payload.curBrightness);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 1780,
+        "wires": [
+            [
+                "e30bad65b5550b15",
+                "1dd64e26b28eec50"
+            ]
+        ]
+    },
+    {
+        "id": "e30bad65b5550b15",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "Set mute state",
+        "func": "msg.payload = flow.get('isMuted');\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 1720,
+        "wires": [
+            [
+                "14a6acd96ecf2321"
+            ]
+        ]
+    },
+    {
+        "id": "1dd64e26b28eec50",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "Set brightness",
+        "func": "msg.payload = flow.get('curBrightness');\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 1860,
+        "wires": [
+            [
+                "b3acbf95667102b0"
+            ]
+        ]
+    },
+    {
+        "id": "2c3458d84ab98bc1",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "Update brightness",
+        "func": "flow.set('curBrightness', msg.payload);\nmsg.payload = [{id: \"1\"}, {$set: {\"curBrightness\": flow.get('curBrightness')}}];\nmsg.operation = \"updateOne\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 1980,
+        "wires": [
+            [
+                "38e7f2d8e737cf2f"
+            ]
+        ]
+    },
+    {
+        "id": "38e7f2d8e737cf2f",
+        "type": "mongodb3 in",
+        "z": "f9f1080903b14d71",
+        "service": "_ext_",
+        "configNode": "2119f505594bdcc1",
+        "name": "Store brightness",
+        "collection": "state",
+        "operation": "",
+        "x": 1180,
+        "y": 1980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "27c2bdd1d19aecda",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "isMuted?",
+        "func": "msg.payload = ''\nmsg.payload = flow.get('isMuted');\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 1700,
+        "wires": [
+            [
+                "70f78cb515508f2f",
+                "c18386c390f5e1e0"
+            ]
+        ]
+    },
+    {
+        "id": "70f78cb515508f2f",
+        "type": "switch",
+        "z": "f9f1080903b14d71",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1190,
+        "y": 1700,
+        "wires": [
+            [
+                "a872c67349ce6da5"
+            ]
+        ]
+    },
+    {
+        "id": "dcf45c78884d3664",
+        "type": "mqtt in",
+        "z": "f9f1080903b14d71",
+        "name": "Food proportion",
+        "topic": "home/foodProportion",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "765ac9edbab7f418",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 420,
+        "y": 600,
+        "wires": [
+            [
+                "64c182fea56ae2ac"
+            ]
+        ]
+    },
+    {
+        "id": "e69251b189b67006",
+        "type": "mqtt in",
+        "z": "f9f1080903b14d71",
+        "name": "Humidity",
+        "topic": "home/humidity",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "765ac9edbab7f418",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 430,
+        "y": 680,
+        "wires": [
+            [
+                "a64dfed4d165a7a7"
+            ]
+        ]
+    },
+    {
+        "id": "f92d6c94f30dcdf2",
+        "type": "mqtt in",
+        "z": "f9f1080903b14d71",
+        "name": "Temperature",
+        "topic": "home/temperature",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "765ac9edbab7f418",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 430,
+        "y": 800,
+        "wires": [
+            [
+                "0db20da5036f0ed3"
+            ]
+        ]
+    },
+    {
+        "id": "f120fbd95d5ccaf8",
+        "type": "debug",
+        "z": "f9f1080903b14d71",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "260640558da16dea",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "Is locked?",
+        "func": "msg.payload = flow.get('isLocked');\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 2060,
+        "wires": [
+            [
+                "51accb245572eda4"
+            ]
+        ]
+    },
+    {
+        "id": "497170fb21654482",
+        "type": "function",
+        "z": "f9f1080903b14d71",
+        "name": "Set mute",
+        "func": "flow.set('isMuted', msg.payload);\nmsg.payload = [{id: \"1\"}, {$set: {\"isMuted\": msg.payload}}];\nmsg.operation = \"updateOne\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 1840,
+        "wires": [
+            [
+                "3f2552360f7fc5bf"
+            ]
+        ]
+    },
+    {
+        "id": "3f2552360f7fc5bf",
+        "type": "mongodb3 in",
+        "z": "f9f1080903b14d71",
+        "service": "_ext_",
+        "configNode": "2119f505594bdcc1",
+        "name": "write isMuted",
+        "collection": "state",
+        "operation": "",
+        "x": 1310,
+        "y": 1880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c18386c390f5e1e0",
+        "type": "debug",
+        "z": "f9f1080903b14d71",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 1620,
+        "wires": []
     },
     {
         "id": "222ae0111aa6cd8f",
