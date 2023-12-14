@@ -7,11 +7,11 @@
 #include <string>
 #include <RTClib.h>
 
-
 const char* ssid = "Wokwi-GUEST";
 const char* password = "";
 const char* mqttServer = "broker.hivemq.com";
 int port = 1883;
+
 // IFTTT
 const char* iftttHost = "maker.ifttt.com";
 
@@ -29,6 +29,11 @@ bool isFed = false;
 RTC_DS1307 rtc;
 DateTime now;
 
+// send consumed food
+long long lastTime = 0;
+int flagSend = 1;
+int eatingAmount = 0;
+
 // sau mot gio thi bat thong bao len
 // bool foodNoti = true;
 // bool tempNoti = true;
@@ -41,8 +46,7 @@ DateTime lastEnvNoti;
 // [1]: 12 - 14h
 // [2]: 16 - 18h
 // [3]: 20 - 22h
-float eatingSchedule[5] = {0, 0, 0, 0, 0};
-float eatingAmount[4] = {0, 0, 0, 0};
+int eatingSchedule[5] = {0, 0, 0, 0, 0};
 int curBrightness = 120;
 int idx = 1;
 
@@ -145,7 +149,7 @@ void callback(char* topic, byte* message, unsigned int length) {
     eatingSchedule[idx] = strMsg.toInt();
     Serial.print(idx);
     Serial.print(": ");
-    // Serial.println(eatingSchedule[idx]);
+    Serial.println(eatingSchedule[idx]);
     idx++;
     if(idx == 5) idx = 1;
   }
@@ -240,44 +244,104 @@ void openLid() {
 void closeLid() {
   servo1.write(0);
 }
-int getCurrentEatingTime(){
-  int hour = now.hour();
-
-  if(hour == 8 || hour == 9)
-    return 1;
-  if(hour == 12 || hour == 13)
-    return 2;
-  if(hour == 16 || hour == 17)
-    return 3;
-  if(hour == 20 || hour == 21)
-    return 4;
-  // chỉ để test h hiện tại.
-  // if(hour == 15)
+int checkEatingSchedule(){
+  // int hour = now.hour();
+  // if(hour == 8 || hour == 9)
+  //   return 1;
+  // if(hour == 12 || hour == 13)
   //   return 2;
+  // if(hour == 16 || hour == 17)
+  //   return 3;
+  // if(hour == 20 || hour == 21)
+  //   return 4;
   
-  return 0;
+  long long cur = millis();
+  long long tmp = cur - lastTime;
+  // Cu 1
+  if(tmp < 15000){
+    return 1;
+  } 
+  if(tmp < 25000 && flagSend == 1){
+    String payload = String(eatingAmount);
+    mqttClient.publish("home/foodConsumed", payload.c_str());
+    Serial.print(flagSend);
+    Serial.print("/ consume: ");
+    Serial.println(eatingAmount);
+    flagSend++;
+    eatingAmount = 0;
+
+    return 0;
+  }
+  // Cu 2
+  if(tmp < 40000){
+    return 2;
+  } 
+  if(tmp < 50000 && flagSend == 2){
+    String payload = String(eatingAmount);
+    mqttClient.publish("home/foodConsumed", payload.c_str());
+    Serial.print(flagSend);
+    Serial.print("/ consume: ");
+    Serial.println(eatingAmount);
+    flagSend++;
+    eatingAmount = 0;
+    
+    return 0;
+  }
+  // Cu 3
+  if(tmp < 65000){
+    return 3;
+  } 
+  if(tmp < 75000 && flagSend == 3){
+    String payload = String(eatingAmount);
+    mqttClient.publish("home/foodConsumed", payload.c_str());
+    Serial.print(flagSend);
+    Serial.print("/ consume: ");
+    Serial.println(eatingAmount);
+    flagSend++;
+    eatingAmount = 0;
+    
+    return 0;
+  }
+
+  if(tmp < 90000){
+    return 4;
+  } 
+  if(tmp < 100000 && flagSend == 4){
+    String payload = String(eatingAmount);
+    mqttClient.publish("home/foodConsumed", payload.c_str());
+    Serial.print(flagSend);
+    Serial.print("/ consume: ");
+    Serial.println(eatingAmount);
+    flagSend++;
+    eatingAmount = 0;
+    
+    lastTime = millis();
+
+    return 0;
+  }
+  flagSend = 1;
 }
-void sendFoodConsumed(){
-  int currentEatingTime;
+// void sendFoodConsumed(){
+//   int currentEatingTime;
 
-  int hour = now.hour();
-  int minute = now.minute();
+//   int hour = now.hour();
+//   int minute = now.minute();
 
-  if(hour == 10 && minute == 0) currentEatingTime = 0;
-  if(hour == 14 && minute == 0) currentEatingTime = 1;
-  if(hour == 18 && minute == 0) currentEatingTime = 2;
-  if(hour == 22 && minute == 0) currentEatingTime = 3;
+//   if(hour == 10 && minute == 0) currentEatingTime = 0;
+//   if(hour == 14 && minute == 0) currentEatingTime = 1;
+//   if(hour == 18 && minute == 0) currentEatingTime = 2;
+//   if(hour == 22 && minute == 0) currentEatingTime = 3;
 
-  // Để test
-  currentEatingTime = 2;
+//   // Để test
+//   currentEatingTime = 2;
 
-  float val = eatingAmount[currentEatingTime];
-  // Serial.println(val);
+//   float val = eatingAmount[currentEatingTime];
+//   // Serial.println(val);
   
-  String payload = String(val);
-  // Serial.println(payload);
-  mqttClient.publish("home/foodConsumed", payload.c_str());
-}
+//   String payload = String(val);
+//   // Serial.println(payload);
+//   mqttClient.publish("home/foodConsumed", payload.c_str());
+// }
 
 void sendHomeData() {
   String payload = String(int(getWeight(false) * 100 / 20000));
@@ -318,6 +382,7 @@ void alertChecking() {
 
 void setup() {
   Serial.begin(115200);
+  lastTime = millis();
 
   // LED
   pinMode(LED_PIN, OUTPUT);
@@ -358,6 +423,8 @@ void setup() {
   scale5.begin(CELL_5_DT_PIN, CELL_5_SCK_PIN);
   scale50.begin(CELL_50_DT_PIN, CELL_50_SCK_PIN);
   // Link: https://wokwi.com/projects/344192176616374868
+
+  
   
   // Real-Time Clock
   if (! rtc.begin()) {
@@ -375,39 +442,35 @@ void loop() {
 
   mqttClient.loop(); // giúp giữ kết nối với server và để hàm callback được gọi
 
-  int currentEatingTime = getCurrentEatingTime();
-  sendFoodConsumed();
+  int currentEatingTime = checkEatingSchedule();
+  // sendFoodConsumed();
 
   alertChecking();
 
   updateLCD();
   int distance = getDistance(); // cm
   if (distance <= 5 || isFed) {
-    // Serial.println(getBrightness());
     if (getBrightness() > 2531) { // 2531 is stairway lighting
       analogWrite(LED_PIN, curBrightness);
-      // Serial.println(curBrightness);
     }
     else {
       analogWrite(LED_PIN, 0);
     }
     playMelody();
     int weight_5 = getWeight(true);
-    if (weight_5 < 1000 
-        && eatingSchedule[currentEatingTime] > 0 
+    if (weight_5 < 500 
+        && eatingSchedule[currentEatingTime] - eatingAmount >= 0 
         && getWeight(false) > 0) {
       servo2.write(90);
+      int startCell50 = getWeight(false);
+      int curCell50;
       do {
-        // Serial.println(eatingSchedule[currentEatingTime]);
-        // Serial.println(eatingAmount[currentEatingTime - 1]);
-        weight_5 = getWeight(true);
-        delay(3000);
-        eatingSchedule[currentEatingTime] = eatingSchedule[currentEatingTime] - 500;
-        eatingAmount[currentEatingTime - 1] = eatingAmount[currentEatingTime - 1] + 500;
-      } while (weight_5 < 2000 
-              && eatingSchedule[currentEatingTime] > 0
-              && getWeight(false) > 0);
-
+        curCell50 = getWeight(false);
+        eatingAmount = startCell50 - curCell50;
+      } while (weight_5 < 700 
+              && eatingSchedule[currentEatingTime] - eatingAmount >= 0
+              && getWeight(false) > 0
+              && startCell50 - curCell50 < 500);
       servo2.write(0);
     }
     isFed = false;
