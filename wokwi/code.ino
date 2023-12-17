@@ -25,13 +25,14 @@ HX711 scale50, scale5;
 double MAX_FOOD = 20000;
 // cho an thu cong
 bool isFed = false;
+bool isMute = false;
 //real time  clock
 // RTC_DS1307 rtc;
 // DateTime now;
 
 // sau mot gio thi bat thong bao len
-// DateTime lastFoodNoti;
-// DateTime lastEnvNoti;
+long long lastFoodNoti;
+long long lastEnvNoti;
 
 // init curBrightness
 int curBrightness = 120;
@@ -106,6 +107,7 @@ void mqttConnect() {
 
       //***Subscribe all topic you need***
       mqttClient.subscribe("buzzer/trigger");
+      mqttClient.subscribe("buzzer/mute");
       mqttClient.subscribe("home/data");
       mqttClient.subscribe("light/set");
       mqttClient.subscribe("lid/open");
@@ -130,6 +132,9 @@ void callback(char* topic, byte* message, unsigned int length) {
   String strTopic = String(topic);
   if (strTopic == "buzzer/trigger") {
     playMelody();
+  } 
+  else if (strTopic == "buzzer/mute") {
+    isMute = (strMsg == "true")? true : false;
   }
   else if (strTopic == "light/set")  {
     setBrightness(strMsg.toInt());
@@ -345,31 +350,31 @@ void sendHomeData() {
   mqttClient.publish("home/humidity", payload.c_str());
 }
 
-// void alertChecking() {
-//   float temp = atof(getTemp().c_str());
-//   float humid = atof(getHumid().c_str());
-//   float food = float(getWeight(false) * 100 / 20000);
+void alertChecking() {
+  float temp = atof(getTemp().c_str());
+  float humid = atof(getHumid().c_str());
+  float food = float(getWeight(false) * 100 / 20000);
 
-//   /*
-//   - Nhiệt độ: 20-38
-//   - Độ ẩm: 50-60%
-//   - Thức ăn: >=10%
-//   */
-//   if (food < 10 && (rtc.now() - lastFoodNoti).totalseconds() >= 3600) {
-//     const char* request = "/trigger/food_running_out/with/key/lNSH-MlkpFLv_4WLvW5O2Dve1P3aSKc7yvg8H9YJHgW?value1=";
-//     sendIFTTTRequest(request, String(food));
-//     lastFoodNoti = rtc.now();
-//     String payload = "The device is running low on supplies (" + String(food) + "% left). Can you please restock it at your earliest convenience?";
-//     mqttClient.publish("alert/food", payload.c_str());
-//   }
-//   if ((temp < 20 || temp > 38 || humid < 50 || humid > 60) && (rtc.now() - lastEnvNoti).totalseconds() >= 3600) {
-//     const char* request = "/trigger/environment/with/key/lNSH-MlkpFLv_4WLvW5O2Dve1P3aSKc7yvg8H9YJHgW?value1=";
-//     sendIFTTTRequest(request, String(temp) + "&value2=" + String(humid));
-//     lastEnvNoti = rtc.now();
-//     String payload = "It seems like the temperature or humidity levels are a bit extreme (" + String(temp) + "°C, " + String(humid) + "%). You might want to check on things and make adjustments if needed.";
-//     mqttClient.publish("alert/env", payload.c_str());
-//   }
-// }
+  /*
+  - Nhiệt độ: 20-38
+  - Độ ẩm: 50-60%
+  - Thức ăn: >=10%
+  */
+  if (food < 10 && (millis() - lastFoodNoti) >= 3600000) {
+    const char* request = "/trigger/food_running_out/with/key/lNSH-MlkpFLv_4WLvW5O2Dve1P3aSKc7yvg8H9YJHgW?value1=";
+    sendIFTTTRequest(request, String(food));
+    lastFoodNoti = millis();
+    String payload = "The device is running low on supplies (" + String(food) + "% left). Can you please restock it at your earliest convenience?";
+    mqttClient.publish("alert/food", payload.c_str());
+  }
+  if ((temp < 20 || temp > 38 || humid < 50 || humid > 60) && (millis() - lastEnvNoti) >= 3600000) {
+    const char* request = "/trigger/environment/with/key/lNSH-MlkpFLv_4WLvW5O2Dve1P3aSKc7yvg8H9YJHgW?value1=";
+    sendIFTTTRequest(request, String(temp) + "&value2=" + String(humid));
+    lastEnvNoti = millis();
+    String payload = "It seems like the temperature or humidity levels are a bit extreme (" + String(temp) + "°C, " + String(humid) + "%). You might want to check on things and make adjustments if needed.";
+    mqttClient.publish("alert/env", payload.c_str());
+  }
+}
 
 void setup() {
   Serial.begin(115200);
@@ -420,12 +425,17 @@ void setup() {
   //   abort();
   // }
   // now = rtc.now();
+
+  // Thời gian để kích hoạt thông báo khẩn cấp
+  lastFoodNoti = -3600000;
+  lastEnvNoti = -3600000;
   
   // Bắt đầu thời gian cho ăn
   lastTime = millis();
   Serial.print("======== The Schedule start at ");
   Serial.print(lastTime / 1000);
   Serial.println("s ========");
+  requestSchedule();
   // requestNewDay();
 }
 void loop() {
@@ -435,7 +445,7 @@ void loop() {
 
   mqttClient.loop(); // giúp giữ kết nối với server và để hàm callback được gọi
 
-  // alertChecking();
+  alertChecking();
 
   updateLCD();
 
@@ -458,9 +468,9 @@ void loop() {
     playMelody();
     
     // Check conditions to open the servo
-    if (   getWeight(true) == 0
-        && getWeight(false) > 0
-        && realEatingAmount[currentEatingTime] > 0) {
+    if (   getWeight(true) == 0 // Hết đồ ăn trong tô
+        && getWeight(false) > 0 // Còn đồ ăn trong bình chứa
+        && realEatingAmount[currentEatingTime] > 0) { // Đang đến cử ăn
       servo2.write(90); // open servo to generate food
       int preWeight5 = getWeight(true);
       int postWeight5;
@@ -494,6 +504,7 @@ void loop() {
 }
 
 void playMelody() {
+  if (isMute) return;
   // Define the melody notes and durations
   // int melody[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_B4};
   int melody[] = {NOTE_C4, NOTE_E4, NOTE_G4, NOTE_B4};
