@@ -33,6 +33,7 @@ bool isMute = false;
 // sau mot gio thi bat thong bao len
 long long lastFoodNoti;
 long long lastEnvNoti;
+long long lastAlertChecking;
 
 // init curBrightness
 int curBrightness = 120;
@@ -351,28 +352,32 @@ void sendHomeData() {
 }
 
 void alertChecking() {
-  float temp = atof(getTemp().c_str());
-  float humid = atof(getHumid().c_str());
-  float food = float(getWeight(false) * 100 / 20000);
+  if(millis() - lastAlertChecking >= 20000){
+    float temp = atof(getTemp().c_str());
+    float humid = atof(getHumid().c_str());
+    float food = float(getWeight(false) * 100 / 20000);
 
-  /*
-  - Nhiệt độ: 20-38
-  - Độ ẩm: 50-60%
-  - Thức ăn: >=10%
-  */
-  if (food < 10 && (millis() - lastFoodNoti) >= 3600000) {
-    const char* request = "/trigger/food_running_out/with/key/lNSH-MlkpFLv_4WLvW5O2Dve1P3aSKc7yvg8H9YJHgW?value1=";
-    sendIFTTTRequest(request, String(food));
-    lastFoodNoti = millis();
-    String payload = "The device is running low on supplies (" + String(food) + "% left). Can you please restock it at your earliest convenience?";
-    mqttClient.publish("alert/food", payload.c_str());
-  }
-  if ((temp < 20 || temp > 38 || humid < 50 || humid > 60) && (millis() - lastEnvNoti) >= 3600000) {
-    const char* request = "/trigger/environment/with/key/lNSH-MlkpFLv_4WLvW5O2Dve1P3aSKc7yvg8H9YJHgW?value1=";
-    sendIFTTTRequest(request, String(temp) + "&value2=" + String(humid));
-    lastEnvNoti = millis();
-    String payload = "It seems like the temperature or humidity levels are a bit extreme (" + String(temp) + "°C, " + String(humid) + "%). You might want to check on things and make adjustments if needed.";
-    mqttClient.publish("alert/env", payload.c_str());
+    /*
+    - Nhiệt độ: 20-38
+    - Độ ẩm: 50-60%
+    - Thức ăn: >=10%
+    */
+    if (food < 10 && (millis() - lastFoodNoti) >= 3600000) {
+      const char* request = "/trigger/food_running_out/with/key/lNSH-MlkpFLv_4WLvW5O2Dve1P3aSKc7yvg8H9YJHgW?value1=";
+      sendIFTTTRequest(request, String(food));
+      lastFoodNoti = millis();
+      String payload = "The device is running low on supplies (" + String(food) + "% left). Can you please restock it at your earliest convenience?";
+      mqttClient.publish("alert/food", payload.c_str());
+    }
+    if ((temp < 20 || temp > 38 || humid < 50 || humid > 60) && (millis() - lastEnvNoti) >= 3600000) {
+      const char* request = "/trigger/environment/with/key/lNSH-MlkpFLv_4WLvW5O2Dve1P3aSKc7yvg8H9YJHgW?value1=";
+      sendIFTTTRequest(request, String(temp) + "&value2=" + String(humid));
+      lastEnvNoti = millis();
+      String payload = "It seems like the temperature or humidity levels are a bit extreme (" + String(temp) + "°C, " + String(humid) + "%). You might want to check on things and make adjustments if needed.";
+      mqttClient.publish("alert/env", payload.c_str());
+    }
+
+    lastAlertChecking = millis();
   }
 }
 
@@ -429,6 +434,7 @@ void setup() {
   // Thời gian để kích hoạt thông báo khẩn cấp
   lastFoodNoti = -3600000;
   lastEnvNoti = -3600000;
+  lastAlertChecking = -20000;
   
   // Bắt đầu thời gian cho ăn
   lastTime = millis();
